@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Endpoint } from '~/app/core/utils/endpoint';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class LoginService {
@@ -10,5 +10,10 @@ export class LoginService {
 
   auth(data: any): Observable<any> {
     return this._http.post(Endpoint.login(), data);
+  }
+
+  logout(): Observable<any> {
+    // TODO: Implement this
+    return of();
   }
 }

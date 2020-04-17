@@ -1,1 +1,8 @@
 <page-router-outlet></page-router-outlet>
+<GridLayout class="page">
+  <page-router-outlet></page-router-outlet>
+  <GridLayout [class.busy]="isLoading | async"> </GridLayout>
+  <GridLayout class="activity-indicator">
+    <ActivityIndicator [busy]="isLoading | async"></ActivityIndicator>
+  </GridLayout>
+</GridLayout>

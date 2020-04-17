@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   onLoginButtonTapped() {
     this._presenter.auth({
-      user: this._userTextField.text,
+      username: this._userTextField.text,
       password: this._passwordTextField.text
     });
   }

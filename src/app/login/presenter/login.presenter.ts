@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 
 import { LoginComponent } from '../view/login.component';
-import { LoginService } from '~/app/shared/services/login.service';
+import { LoginService } from '~/app/core/services/login.service';
 
 @Injectable()
 export class LoginPresenter {
