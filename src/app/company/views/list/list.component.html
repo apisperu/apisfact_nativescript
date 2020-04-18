@@ -1,0 +1,26 @@
+<GridLayout rows="*,auto" class="page">
+  <StackLayout class="container" height="100%">
+    <Label
+      text="<- Volver"
+      textWrap="true"
+      class="back"
+      (tap)="onBackTapped()"
+    ></Label>
+    <Label text="Empresas" textWrap="true" class="title"></Label>
+    <StackLayout class="page-content">
+      <app-custom-list [list]="companyList"> </app-custom-list>
+    </StackLayout>
+  </StackLayout>
+  <AbsoluteLayout horizontalAlignment="right" row="1" width="92" height="92">
+    <Button
+      top="16"
+      left="16"
+      text="+"
+      height="60"
+      width="60"
+      class="rounded-button"
+      (tap)="onAddButtonTapped()"
+    >
+    </Button>
+  </AbsoluteLayout>
+</GridLayout>

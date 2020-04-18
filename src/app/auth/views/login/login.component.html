@@ -8,14 +8,15 @@
   </StackLayout>
   <StackLayout row="1" class="b-white p-20" width="100%">
     <StackLayout class="input-field">
-      <TextField id="userTextField" hint="Usuario" class="input"></TextField>
+      <Label class="label-input" text="Usuario"></Label>
+      <TextField id="userTextField" class="input"></TextField>
       <StackLayout class="hr-light"></StackLayout>
     </StackLayout>
     <StackLayout class="input-field">
+      <Label class="label-input" text="Password"></Label>
       <TextField
         id="passwordTextField"
         secure="true"
-        hint="Password"
         class="input"
         returnKeyType="done"
       ></TextField>

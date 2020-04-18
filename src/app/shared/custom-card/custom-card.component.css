@@ -1,0 +1,23 @@
+.custom-card {
+  background-color: #282e39;
+  padding: 24px;
+  width: 250px;
+  height: 250px;
+  text-align: center;
+  color: white;
+  border-radius: 5%;
+  margin: 16px;
+}
+
+.card-image {
+  width: 100px;
+}
+
+.card-title {
+  margin-top: 24px;
+  font-size: 16px;
+}
+
+.card-description {
+  font-size: 12px;
+}

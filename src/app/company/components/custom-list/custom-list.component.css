@@ -1,0 +1,32 @@
+.custom-list {
+  background-color: #282e39;
+  padding: 32px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  border-radius: 5%;
+  margin: 16px;
+}
+
+.list-image {
+  width: 50px;
+  margin-right: 32px;
+}
+
+.list-title {
+  font-size: 18px;
+  text-align: left;
+}
+
+.list-description {
+  text-align: left;
+  color: #bbb;
+}
+
+.description-key {
+  font-size: 14px;
+}
+
+.description-value {
+  font-size: 16;
+}

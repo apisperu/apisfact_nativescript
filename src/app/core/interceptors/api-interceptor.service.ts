@@ -29,7 +29,8 @@ export class ApiInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const authToken = `Bearer ${this.appState.get('accessToken')}`;
+    const authToken = this.appState.get('accessToken');
+    console.log({ authToken });
     this.loaderService.showLoader();
     if (authToken) {
       request = request.clone({

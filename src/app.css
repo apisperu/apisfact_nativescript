@@ -10,10 +10,40 @@ of writing your own CSS rules. For a full list of class names in the theme
 refer to http://docs.nativescript.org/ui/theme.
 */
 @import '~nativescript-theme-core/css/core.light.css';
+/* @import './fonts/brands.css';
+@import './fonts/regular.css';
+@import './fonts/solid.css'; */
 /*
 For example, the following CSS rule changes the font size of all UI
 components that have the btn class name.
 */
+.fa,
+.fas {
+  font-family: 'Font Awesome 5 Free', 'fa-solid-900';
+  font-weight: 900;
+}
 .btn {
-    font-size: 18;
+  font-size: 18;
+}
+.page {
+  /* font-family: 'Roboto-Regular', 'Roboto-Bold'; */
+  font-family: 'FontsFree-Net-SFProText-Regular', 'FontsFree-Net-SFProText-Bold';
+  font-weight: bold;
+  background-color: #21252d;
+}
+.container {
+  padding: 32px;
+}
+
+/* Helpers */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
 }

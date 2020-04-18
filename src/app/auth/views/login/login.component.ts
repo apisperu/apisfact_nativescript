@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginPresenter } from '../presenter/login.presenter';
+import { LoginPresenter } from './login.presenter';
 import { TextField } from 'tns-core-modules/ui/text-field';
 import { Page } from 'tns-core-modules/ui/page/page';
 
 @Component({
-  selector: 'Login',
+  selector: 'app-login',
   moduleId: module.id,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [LoginPresenter],
 })
 export class LoginComponent implements OnInit {
   private _userTextField: TextField;
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
   onLoginButtonTapped() {
     this._presenter.auth({
       username: this._userTextField.text,
-      password: this._passwordTextField.text
+      password: this._passwordTextField.text,
     });
   }
 }

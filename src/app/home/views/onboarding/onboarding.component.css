@@ -1,0 +1,22 @@
+.title {
+  font-size: 32px;
+  color: white;
+  font-weight: bold;
+  margin-top: 24px;
+}
+.username {
+  font-size: 16px;
+  color: white;
+  font-weight: normal;
+}
+
+.logout {
+  font-size: 16px;
+  color: #71a202;
+  font-weight: normal;
+}
+
+.page-content {
+  text-align: center;
+  margin-top: 32px;
+}

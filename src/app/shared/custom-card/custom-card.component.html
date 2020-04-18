@@ -1,0 +1,9 @@
+<StackLayout class="custom-card" (tap)="onCardTapped()">
+  <Image
+    class="m-x-auto card-image"
+    src="res://{{ image }}"
+    stretch="aspectFit"
+  ></Image>
+  <Label class="card-title" [text]="title"></Label>
+  <Label class="card-description" [text]="description"></Label>
+</StackLayout>

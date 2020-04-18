@@ -1,0 +1,20 @@
+<StackLayout
+  *ngFor="let item of list"
+  class="custom-list"
+  orientation="horizontal"
+>
+  <Image
+    class="m-x-auto list-image"
+    src="res://tick"
+    stretch="aspectFit"
+  ></Image>
+  <StackLayout>
+    <Label class="list-title" [text]="item.razon_social"></Label>
+    <Label class="list-description">
+      <FormattedString>
+        <Span class="description-key" text="RUC: "></Span>
+        <Span class="description-value" [text]="item.ruc"></Span>
+      </FormattedString>
+    </Label>
+  </StackLayout>
+</StackLayout>

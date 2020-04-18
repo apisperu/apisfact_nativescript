@@ -1,0 +1,67 @@
+<GridLayout rows="*, auto" class="page">
+  <StackLayout row="0" class="container">
+    <Label
+      text="<- Volver"
+      textWrap="true"
+      class="back"
+      (tap)="onBackTapped()"
+    ></Label>
+    <Label text="Nueva Empresa" textWrap="true" class="title"></Label>
+    <ScrollView height="100%">
+      <StackLayout class="page-content">
+        <Label class="label" text="Razon Social"></Label>
+        <TextField id="businessNameTextField" hint="" class="input"></TextField>
+        <Label class="label" text="RUC"></Label>
+        <TextField id="rucTextField" hint="" class="input"></TextField>
+        <Label class="label" text="Usuario SOL"></Label>
+        <TextField id="solUserTextField" hint="" class="input"></TextField>
+        <Label class="label" text="Password SOL"></Label>
+        <TextField
+          id="solPasswordTextField"
+          hint=""
+          secure="true"
+          class="input"
+        ></TextField>
+        <Label class="label" text="Dirección"></Label>
+        <TextField id="addressTextField" hint="" class="input"></TextField>
+
+        <Label class="label" text="Certificado (PEM)"></Label>
+        <StackLayout orientation="horizontal">
+          <Button
+            class="btn-secondary m-y-2"
+            text="Cargar"
+            width="100"
+            (tap)="onCertButtonTapped()"
+          ></Button>
+          <Label
+            id="certificateLabel"
+            class="label-file"
+            verticalAlignment="center"
+          ></Label>
+        </StackLayout>
+
+        <Label class="label" text="Logo"></Label>
+        <StackLayout orientation="horizontal">
+          <Button
+            class="btn-secondary m-y-2"
+            width="100"
+            text="Cargar"
+            (tap)="onLogoButtonTapped()"
+          ></Button>
+          <Label
+            id="logoLabel"
+            class="label-file"
+            verticalAlignment="center"
+          ></Label>
+        </StackLayout>
+      </StackLayout>
+    </ScrollView>
+  </StackLayout>
+  <StackLayout row="1">
+    <Button
+      class="btn-primary"
+      text="Guardar"
+      (tap)="onSaveButtonTapped()"
+    ></Button>
+  </StackLayout>
+</GridLayout>
