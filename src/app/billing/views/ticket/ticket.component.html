@@ -1,0 +1,77 @@
+<GridLayout rows="*, auto" class="page">
+  <StackLayout row="0" class="container">
+    <Label
+      text="<- Volver"
+      textWrap="true"
+      class="back"
+      (tap)="onBackTapped()"
+    ></Label>
+    <Label text="Emisión de Boletas" textWrap="true" class="title"></Label>
+    <ScrollView height="100%">
+      <StackLayout class="page-content" [formGroup]="ticketForm">
+        <Label class="label" text="Serie"></Label>
+        <TextField hint="" formControlName="serie" class="input"></TextField>
+        <Label class="label" text="Correlativo"></Label>
+        <TextField
+          formControlName="correlativo"
+          hint=""
+          class="input"
+        ></TextField>
+        <Label class="label" text="Moneda"></Label>
+        <TextField
+          formControlName="tipoMoneda"
+          hint=""
+          class="input"
+        ></TextField>
+        <!-- <ListPicker
+          [items]="currencyList"
+          textField="value"
+          valueField="key"
+          selectedIndex="0"
+          (selectedIndexChange)="onSelectedCurrency($event)"
+        ></ListPicker> -->
+        <Label class="label" text="DNI cliente"></Label>
+        <TextField hint="" class="input"></TextField>
+        <Label class="label" text="Razón social"></Label>
+        <TextField
+          id="razonSocialClienteTextField"
+          hint=""
+          class="input"
+        ></TextField>
+        <Label class="label" text="Dirección cliente"></Label>
+        <TextField
+          id="direccionClienteTextField"
+          hint=""
+          class="input"
+        ></TextField>
+        <Label class="label" text="Monto operaciones gravadas"></Label>
+        <TextField
+          id="mtoOperGravadasTextField"
+          hint=""
+          class="input"
+        ></TextField>
+        <Label class="label" text="Monto IGV"></Label>
+        <TextField id="mtoIGVTextField" hint="" class="input"></TextField>
+        <Label class="label" text="Total impuestos"></Label>
+        <TextField
+          id="totalImpuestosTextField"
+          hint=""
+          class="input"
+        ></TextField>
+        <Label class="label" text="Valor venta"></Label>
+        <TextField id="valorVentaTextField" hint="" class="input"></TextField>
+        <Label class="label" text="Monto total"></Label>
+        <TextField id="mtoImpVentaTextField" hint="" class="input"></TextField>
+        <Label class="label" text="Legenda"></Label>
+        <TextField id="legendTextField" hint="" class="input"></TextField>
+      </StackLayout>
+    </ScrollView>
+  </StackLayout>
+  <StackLayout row="1">
+    <Button
+      class="btn-primary"
+      text="Guardar"
+      (tap)="onSaveButtonTapped()"
+    ></Button>
+  </StackLayout>
+</GridLayout>

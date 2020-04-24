@@ -1,0 +1,32 @@
+<GridLayout rows="*, auto" class="page">
+  <StackLayout row="0" class="container">
+    <Label
+      text="<- Volver"
+      textWrap="true"
+      class="back"
+      (tap)="onBackTapped()"
+    ></Label>
+    <Label text="Nuevo Cliente" textWrap="true" class="title"></Label>
+    <ScrollView height="100%">
+      <StackLayout class="page-content" [formGroup]="clientForm">
+        <Label class="label" text="Nombres"></Label>
+        <TextField
+          formControlName="rznSocial"
+          hint=""
+          class="input"
+        ></TextField>
+        <Label class="label" text="DNI"></Label>
+        <TextField formControlName="numDoc" hint="" class="input"></TextField>
+        <Label class="label" text="Dirección"></Label>
+        <TextField formControlName="address" hint="" class="input"></TextField>
+      </StackLayout>
+    </ScrollView>
+  </StackLayout>
+  <StackLayout row="1">
+    <Button
+      class="btn-primary"
+      text="Guardar"
+      (tap)="onSaveButtonTapped()"
+    ></Button>
+  </StackLayout>
+</GridLayout>

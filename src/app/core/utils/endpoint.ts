@@ -5,4 +5,7 @@ export class Endpoint {
   static company() {
     return `companies`;
   }
+  static invoice() {
+    return `invoice/send`;
+  }
 }

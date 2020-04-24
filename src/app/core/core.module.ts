@@ -5,8 +5,19 @@ import { LoginService } from './services/login.service';
 import { CompanyService } from './services/company.service';
 import { LoginGuard } from './guards/login.guard';
 import { FilePickerService } from './services/file-picker.service';
+import { BillingService } from './services/billing.service';
+import { ClientService } from './services/client.service';
+import { ProductService } from './services/product.service';
 
-const providers = [LoginService, CompanyService, LoginGuard, FilePickerService];
+const providers = [
+  LoginService,
+  CompanyService,
+  ClientService,
+  ProductService,
+  BillingService,
+  LoginGuard,
+  FilePickerService,
+];
 
 @NgModule({
   imports: [HttpClientModule],

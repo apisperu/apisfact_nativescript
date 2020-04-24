@@ -1,5 +1,21 @@
 <GridLayout rows="*" class="page">
   <StackLayout class="container">
     <Label text="Facturación" textWrap="true" class="title"></Label>
+    <StackLayout
+      orientation="horizontal"
+      class="page-content"
+      horizontalAlignment="center"
+    >
+      <app-custom-card
+        image="bill"
+        title="Emisión de Boletas"
+        path="billing/ticket"
+      ></app-custom-card>
+      <app-custom-card
+        image="bill"
+        title="Emisión de Facturas"
+        path="billing/invoice"
+      ></app-custom-card>
+    </StackLayout>
   </StackLayout>
 </GridLayout>

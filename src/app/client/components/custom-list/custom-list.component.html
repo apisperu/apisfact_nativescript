@@ -1,0 +1,27 @@
+<StackLayout
+  *ngFor="let item of list"
+  class="custom-list"
+  orientation="horizontal"
+  (tap)="onItemTapped(item.numDoc)"
+>
+  <Image
+    class="m-x-auto list-image"
+    src="res://tick"
+    stretch="aspectFit"
+  ></Image>
+  <StackLayout>
+    <Label class="list-title" [text]="item.rznSocial"></Label>
+    <Label class="list-description">
+      <FormattedString>
+        <Span class="description-key" text="N° Doc: "></Span>
+        <Span class="description-value" [text]="item.numDoc"></Span>
+      </FormattedString>
+    </Label>
+    <Label class="list-description">
+      <FormattedString>
+        <Span class="description-key" text="Dirección: "></Span>
+        <Span class="description-value" [text]="item.address.direccion"></Span>
+      </FormattedString>
+    </Label>
+  </StackLayout>
+</StackLayout>
