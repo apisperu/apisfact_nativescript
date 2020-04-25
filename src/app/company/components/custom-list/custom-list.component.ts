@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { ICompany } from '../../models/company.model';
+import { CompanyService } from '~/app/core/services/company.service';
 
 @Component({
   selector: 'app-custom-list',
@@ -11,12 +13,16 @@ export class CustomListComponent implements OnInit {
   @Input()
   list = [];
 
-  constructor(private _router: Router) {}
+  constructor(
+    private _router: Router,
+    private _companyService: CompanyService
+  ) {}
 
   ngOnInit(): void {}
 
-  // onCardTapped() {
-  //   console.log('tapped', this.path);
-  //   // this._router.navigate([this.path]);
-  // }
+  onItemTapped(item: ICompany) {
+    this._companyService.storeActiveCompany(item).subscribe(() => {
+      this._router.navigate([`billing/${item.ruc}`]);
+    });
+  }
 }

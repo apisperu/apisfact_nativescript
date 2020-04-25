@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: './client/client.module#ClientModule',
   },
   {
+    path: 'product',
+    loadChildren: './product/product.module#ProductModule',
+  },
+  {
     path: 'billing',
     loadChildren: './billing/billing.module#BillingModule',
   },

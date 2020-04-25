@@ -6,6 +6,7 @@ import {
   getString,
   setString,
 } from 'tns-core-modules/application-settings/application-settings';
+import { IProduct } from '~/app/product/models/product.model';
 
 @Injectable()
 export class ProductService {
@@ -47,8 +48,14 @@ export class ProductService {
     return of({});
   }
 
+  getByCode(codProducto: string): Observable<any> {
+    const productList: IProduct[] = this.getProductList();
+    return of(productList.find((item) => item.codProducto === codProducto));
+  }
+
   private getProductList(): any[] {
-    return JSON.parse(getString('productList'));
+    const productList = getString('productList');
+    return productList ? JSON.parse(productList) : [];
   }
 
   private saveProductList(productList) {

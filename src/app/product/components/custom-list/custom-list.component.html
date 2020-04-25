@@ -1,0 +1,27 @@
+<StackLayout
+  *ngFor="let item of list"
+  class="custom-list"
+  orientation="horizontal"
+  (tap)="onItemTapped(item.codProducto)"
+>
+  <Image
+    class="m-x-auto list-image"
+    src="res://tick"
+    stretch="aspectFit"
+  ></Image>
+  <StackLayout>
+    <Label class="list-title" [text]="item.descripcion"></Label>
+    <Label class="list-description">
+      <FormattedString>
+        <Span class="description-key" text="Cod: "></Span>
+        <Span class="description-value" [text]="item.codProducto"></Span>
+      </FormattedString>
+    </Label>
+    <Label class="list-description">
+      <FormattedString>
+        <Span class="description-key" text="Valor Unit: "></Span>
+        <Span class="description-value" [text]="item.mtoValorUnitario"></Span>
+      </FormattedString>
+    </Label>
+  </StackLayout>
+</StackLayout>

@@ -1,6 +1,17 @@
 <GridLayout rows="*" class="page">
   <StackLayout class="container">
+    <Label
+      text="<- Volver"
+      textWrap="true"
+      class="back"
+      (tap)="onBackTapped()"
+    ></Label>
     <Label text="Facturación" textWrap="true" class="title"></Label>
+    <Label
+      [text]="company ? company.razon_social : ''"
+      textWrap="true"
+      class="company"
+    ></Label>
     <StackLayout
       orientation="horizontal"
       class="page-content"

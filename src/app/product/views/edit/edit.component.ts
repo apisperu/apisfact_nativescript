@@ -2,18 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { EditPresenter } from './edit.presenter';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { IProduct } from '../../models/product.model';
 
 @Component({
-  selector: 'app-client-edit',
+  selector: 'app-product-edit',
   moduleId: module.id,
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
   providers: [EditPresenter],
 })
 export class EditComponent implements OnInit {
-  docNumber = '';
-  clientForm: FormGroup;
+  codProducto = '';
+  productForm: FormGroup;
 
   constructor(
     private _page: Page,
@@ -25,8 +26,8 @@ export class EditComponent implements OnInit {
     this.setForm();
     this._presenter.setView(this);
     this._activatedRoute.params.subscribe((data) => {
-      this.docNumber = data.id;
-      this._presenter.getClient(this.docNumber);
+      this.codProducto = data.id;
+      this._presenter.getProduct(this.codProducto);
     });
   }
 
@@ -34,42 +35,39 @@ export class EditComponent implements OnInit {
     this._page.actionBarHidden = true;
   }
 
-  setData(data) {
-    this.clientForm.get('numDoc').setValue(data.numDoc);
-    this.clientForm.get('rznSocial').setValue(data.rznSocial);
-    this.clientForm.get('address').setValue(data.address.direccion);
+  setData(data: IProduct) {
+    this.productForm.get('codProducto').setValue(data.codProducto);
+    this.productForm.get('descripcion').setValue(data.descripcion);
+    this.productForm.get('unidad').setValue(data.unidad);
+    this.productForm.get('mtoValorUnitario').setValue(data.mtoValorUnitario);
   }
 
   setForm() {
-    this.clientForm = this._fb.group({
-      tipoDoc: ['1', []],
-      numDoc: [
+    this.productForm = this._fb.group({
+      descripcion: [null, []],
+      codProducto: [
         {
           value: null,
           disabled: true,
         },
         [],
       ],
-      rznSocial: [null, []],
-      address: [null, []],
+      unidad: [null, []],
+      mtoValorUnitario: [null, []],
     });
   }
 
   onBackTapped() {
-    this._router.navigate(['client']);
+    this._router.navigate(['product']);
   }
 
   onSaveButtonTapped() {
-    const data = this.clientForm.getRawValue();
-
-    data.address = {
-      direccion: data.address,
-    };
-    this._presenter.updateClient(data);
+    const data: IProduct = this.productForm.getRawValue();
+    this._presenter.updateProduct(data);
   }
 
   onDeleteButtonTapped() {
-    this._presenter.deleteClient(this.docNumber);
+    this._presenter.deleteProduct(this.codProducto);
   }
 
   onSuccessSave(result) {

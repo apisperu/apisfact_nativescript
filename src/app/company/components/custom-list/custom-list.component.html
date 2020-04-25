@@ -2,6 +2,7 @@
   *ngFor="let item of list"
   class="custom-list"
   orientation="horizontal"
+  (tap)="onItemTapped(item)"
 >
   <Image
     class="m-x-auto list-image"

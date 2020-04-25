@@ -1,38 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { ListPresenter } from './list.presenter';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ICompany } from '~/app/company/models/company.model';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-billing-list',
+  selector: 'app-product-list',
   moduleId: module.id,
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
   providers: [ListPresenter],
 })
 export class ListComponent implements OnInit {
-  company: ICompany = null;
+  productList = [];
+
   constructor(
     private _page: Page,
     private _presenter: ListPresenter,
-    private _activatedRoute: ActivatedRoute,
     private _router: Router
   ) {
     this._presenter.setView(this);
-    this._activatedRoute.params.subscribe((data) => {
-      this._presenter.getCompany(data.id);
-    });
   }
 
   ngOnInit(): void {
     this._page.actionBarHidden = true;
+    this._presenter.getProductList();
   }
 
-  setCompany(data: ICompany) {
-    this.company = data;
+  setProductList(productList) {
+    this.productList = productList;
   }
+
   onBackTapped() {
-    this._router.navigate(['company']);
+    this._router.navigate(['home']);
+  }
+
+  onAddButtonTapped() {
+    this._router.navigate(['product/new']);
   }
 }

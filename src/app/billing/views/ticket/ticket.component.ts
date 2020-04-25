@@ -119,6 +119,7 @@ export class TicketComponent implements OnInit {
   }
 
   onBackTapped() {
+    // TODO: set company ruc in the path
     this._router.navigate(['billing']);
   }
 
