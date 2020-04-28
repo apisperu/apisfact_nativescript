@@ -9,61 +9,106 @@
     <Label text="Emisión de Boletas" textWrap="true" class="title"></Label>
     <ScrollView height="100%">
       <StackLayout class="page-content" [formGroup]="ticketForm">
-        <Label class="label" text="Serie"></Label>
-        <TextField hint="" formControlName="serie" class="input"></TextField>
-        <Label class="label" text="Correlativo"></Label>
-        <TextField
-          formControlName="correlativo"
-          hint=""
-          class="input"
-        ></TextField>
+        <StackLayout orientation="horizontal">
+          <StackLayout width="50%">
+            <Label class="label" text="Serie"></Label>
+            <TextField
+              hint=""
+              formControlName="serie"
+              class="input"
+            ></TextField>
+          </StackLayout>
+          <StackLayout width="50%">
+            <Label class="label" text="Correlativo"></Label>
+            <TextField
+              formControlName="correlativo"
+              hint=""
+              class="input"
+            ></TextField>
+          </StackLayout>
+        </StackLayout>
         <Label class="label" text="Moneda"></Label>
-        <TextField
-          formControlName="tipoMoneda"
-          hint=""
-          class="input"
-        ></TextField>
-        <!-- <ListPicker
-          [items]="currencyList"
-          textField="value"
-          valueField="key"
-          selectedIndex="0"
-          (selectedIndexChange)="onSelectedCurrency($event)"
-        ></ListPicker> -->
-        <Label class="label" text="DNI cliente"></Label>
-        <TextField hint="" class="input"></TextField>
-        <Label class="label" text="Razón social"></Label>
-        <TextField
-          id="razonSocialClienteTextField"
-          hint=""
-          class="input"
-        ></TextField>
-        <Label class="label" text="Dirección cliente"></Label>
-        <TextField
-          id="direccionClienteTextField"
-          hint=""
-          class="input"
-        ></TextField>
-        <Label class="label" text="Monto operaciones gravadas"></Label>
-        <TextField
-          id="mtoOperGravadasTextField"
-          hint=""
-          class="input"
-        ></TextField>
-        <Label class="label" text="Monto IGV"></Label>
-        <TextField id="mtoIGVTextField" hint="" class="input"></TextField>
-        <Label class="label" text="Total impuestos"></Label>
-        <TextField
-          id="totalImpuestosTextField"
-          hint=""
-          class="input"
-        ></TextField>
-        <Label class="label" text="Valor venta"></Label>
-        <TextField id="valorVentaTextField" hint="" class="input"></TextField>
-        <Label class="label" text="Monto total"></Label>
-        <TextField id="mtoImpVentaTextField" hint="" class="input"></TextField>
-        <Label class="label" text="Legenda"></Label>
-        <TextField id="legendTextField" hint="" class="input"></TextField>
+        <StackLayout orientation="horizontal">
+          <TextField
+            width="50%"
+            formControlName="tipoMoneda"
+            hint=""
+            class="input"
+          ></TextField>
+          <Button
+            width="50%"
+            text="Seleccionar"
+            (tap)="onSelectCurrency()"
+          ></Button>
+        </StackLayout>
+        <Label class="label" text="Cliente"></Label>
+        <StackLayout orientation="horizontal">
+          <TextField
+            width="50%"
+            hint=""
+            class="input"
+            formControlName="client"
+          ></TextField>
+          <Button
+            width="50%"
+            text="Seleccionar"
+            (tap)="onSelectClient()"
+          ></Button>
+        </StackLayout>
+        <Label class="label" text="Productos"></Label>
+        <Button text="Añadir productos" (tap)="onSelectProduct()"></Button>
+        <StackLayout class="product-detail">
+          <StackLayout class="" orientation="horizontal">
+            <Label width="20%" class="product-detail-header" text="Cód"></Label>
+            <Label
+              width="25%"
+              class="product-detail-header"
+              text="Desc"
+            ></Label>
+            <Label width="20%" class="product-detail-header" text="V.U"></Label>
+            <Label
+              width="15%"
+              class="product-detail-header"
+              text="Cant"
+            ></Label>
+            <Label
+              width="20%"
+              class="product-detail-header"
+              text="V.Ven"
+            ></Label>
+          </StackLayout>
+          <StackLayout
+            class="product-detail-item"
+            *ngFor="let item of billingDetail"
+            orientation="horizontal"
+          >
+            <Label
+              width="20%"
+              class="product-detail-label"
+              [text]="item.codProducto"
+            ></Label>
+            <Label
+              width="25%"
+              class="product-detail-label"
+              [text]="item.descripcion"
+            ></Label>
+            <Label
+              width="20%"
+              class="product-detail-label text-right"
+              text="S/ {{ item.mtoValorUnitario | number: '1.2-2' }}"
+            ></Label>
+            <Label
+              width="15%"
+              class="product-detail-label text-right"
+              [text]="item.cantidad"
+            ></Label>
+            <Label
+              width="20%"
+              class="product-detail-label text-right"
+              text="S/ {{ item.mtoValorVenta | number: '1.2-2' }}"
+            ></Label>
+          </StackLayout>
+        </StackLayout>
       </StackLayout>
     </ScrollView>
   </StackLayout>

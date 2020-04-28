@@ -1,0 +1,16 @@
+<StackLayout class="page">
+  <StackLayout width="80%" class="modal-container">
+    <Label
+      class="my-label"
+      text="Seleciona un cliente"
+      textWrap="false"
+    ></Label>
+    <StackLayout>
+      <Button
+        *ngFor="let client of clientList"
+        text="{{ client.rznSocial }} | {{ client.numDoc }}"
+        (tap)="onSelectOptionTapped(client)"
+      ></Button>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>

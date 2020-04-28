@@ -20,9 +20,9 @@ export class ListPresenter {
     this._view = view;
   }
 
-  getCompany(ruc: string) {
-    this._companyService.getActiveCompany(ruc).subscribe((data: ICompany) => {
-      this._view.setCompany(data);
+  getActiveCompany() {
+    this._companyService.getActiveCompany().subscribe((data: ICompany) => {
+      this._view.setActiveCompany(data);
     });
   }
 }

@@ -5,7 +5,10 @@ import { ListComponent } from './views/list/list.component';
 import { TicketComponent } from './views/ticket/ticket.component';
 
 const routes: Routes = [
-  { path: 'ticket', component: TicketComponent },
+  {
+    path: 'ticket',
+    component: TicketComponent,
+  },
   { path: ':id', component: ListComponent },
 ];
 

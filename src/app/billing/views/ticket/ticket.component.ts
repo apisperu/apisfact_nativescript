@@ -1,9 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, Type } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { TicketPresenter } from './ticket.presenter';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ICompany } from '~/app/company/models/company.model';
+import {
+  IBillingRequest,
+  IBillingDetailRequest,
+} from '../../models/billing.request';
+import { CompanyUtil } from '~/app/core/utils/company.util';
+import {
+  ModalDialogOptions,
+  ModalDialogService,
+} from 'nativescript-angular/modal-dialog';
+import { CurrencySelectorModalComponent } from '../../components/currency-selector-modal.component/currency-selector-modal.component';
+import { ClientSelectorModalComponent } from '../../components/client-selector-modal.component/client-selector-modal.component';
+import { IClient } from '~/app/client/models/client.model';
+import { ProductSelectorModalComponent } from '../../components/product-selector-modal.component/product-selector-modal.component';
+import { IProductExtended } from '~/app/product/models/product-extended.model';
+import { NumberUtil } from '~/app/core/utils/number.util';
 
+const IGV_PERCENTAGE = 18;
+const TIPO_AFECT_IGV = 10;
+const UBL_VERSION = '2.1';
 @Component({
   selector: 'app-billing-ticket',
   moduleId: module.id,
@@ -13,22 +32,18 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class TicketComponent implements OnInit {
   ticketForm: FormGroup;
-  currencyList = [
-    {
-      key: 'PEN',
-      value: 'Soles',
-    },
-    {
-      key: 'USD',
-      value: 'Dólares',
-    },
-  ];
+  company: ICompany = null;
+  client: IClient = null;
+  currency = 'PEN';
+  billingDetail: IBillingDetailRequest[] = [];
 
   constructor(
     private _page: Page,
     private _presenter: TicketPresenter,
     private _router: Router,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private vcRef: ViewContainerRef,
+    private _modalService: ModalDialogService
   ) {
     this._presenter.setView(this);
     this.setForm();
@@ -36,6 +51,7 @@ export class TicketComponent implements OnInit {
 
   ngOnInit(): void {
     this._page.actionBarHidden = true;
+    this._presenter.getActiveCompany();
   }
 
   setForm() {
@@ -45,62 +61,13 @@ export class TicketComponent implements OnInit {
       serie: ['B001', []],
       correlativo: ['1', []],
       fechaEmision: ['2019-10-27T00:00:00-05:00', []], // set current date
-      tipoMoneda: ['PEN'],
-      client: [
+      tipoMoneda: [
         {
-          tipoDoc: '1',
-          numDoc: 47602928,
-          rznSocial: 'EDGAR ANTONIO FLORES',
-          address: {
-            direccion: 'AV LOS GERUNDIOS',
-          },
+          value: this.currency,
+          disabled: true,
         },
-        [],
       ],
-      company: [
-        {
-          ruc: 20000000008,
-          razonSocial: 'Empresa RJ',
-          address: {
-            direccion: 'Direccion rj',
-          },
-        },
-        [],
-      ], // Set company antes de elegir esta página
-      mtoOperGravadas: [100, []],
-      mtoIGV: [18, []],
-      totalImpuestos: [18, []],
-      valorVenta: [100, []],
-      mtoImpVenta: [118, []],
-      ublVersion: ['2.1', []],
-      details: [
-        [
-          {
-            codProducto: 'P001',
-            unidad: 'NIU',
-            descripcion: 'PRODUCTO 1',
-            cantidad: 2,
-            mtoValorUnitario: 50,
-            mtoValorVenta: 100,
-            mtoBaseIgv: 100,
-            porcentajeIgv: 18,
-            igv: 18,
-            tipAfeIgv: 10,
-            totalImpuestos: 18,
-            mtoPrecioUnitario: 59,
-          },
-        ],
-        [],
-      ],
-      legends: [
-        [
-          {
-            code: '1000',
-            value: 'SON CIENTO DIECIOCHO CON 00/100 SOLES',
-          },
-        ],
-        [],
-      ],
+      client: [{ value: null, disabled: true }, []],
     });
   }
 
@@ -109,8 +76,9 @@ export class TicketComponent implements OnInit {
   }
 
   onSaveButtonTapped() {
-    console.log(this.ticketForm.value);
-    this._presenter.save(this.ticketForm.value);
+    const request = this.formatData();
+    console.log(request);
+    this._presenter.save(request);
   }
 
   onSuccessSaved(response) {
@@ -119,12 +87,91 @@ export class TicketComponent implements OnInit {
   }
 
   onBackTapped() {
-    // TODO: set company ruc in the path
-    this._router.navigate(['billing']);
+    this._router.navigate([`billing/${this.company.ruc}`]);
+  }
+
+  setActiveCompany(company: ICompany) {
+    this.company = company;
+  }
+
+  onSelectCurrency() {
+    this.createModal(CurrencySelectorModalComponent).then((data: string) => {
+      this.currency = data;
+      this.ticketForm.get('tipoMoneda').setValue(data);
+    });
+  }
+
+  onSelectClient() {
+    this.createModal(ClientSelectorModalComponent).then((data: IClient) => {
+      this.client = data;
+      this.ticketForm.get('client').setValue(data.rznSocial);
+    });
+  }
+
+  onSelectProduct() {
+    this.createModal(ProductSelectorModalComponent).then(
+      (data: IProductExtended[]) => {
+        this.billingDetail = data.map((item) => {
+          const subTotal = item.mtoValorUnitario * item.cantidad;
+          const totalIgv = (subTotal * IGV_PERCENTAGE) / 100;
+          return {
+            cantidad: item.cantidad,
+            codProducto: item.codProducto,
+            descripcion: item.descripcion,
+            mtoValorUnitario: item.mtoValorUnitario,
+            unidad: item.unidad,
+            mtoValorVenta: subTotal,
+            mtoBaseIgv: subTotal,
+            porcentajeIgv: IGV_PERCENTAGE,
+            igv: totalIgv,
+            tipAfeIgv: TIPO_AFECT_IGV,
+            totalImpuestos: totalIgv,
+            mtoPrecioUnitario: item.mtoValorUnitario + totalIgv / item.cantidad,
+          } as IBillingDetailRequest;
+        });
+      }
+    );
+  }
+
+  createModal(modalComponent: Type<unknown>): Promise<any> {
+    const options: ModalDialogOptions = {
+      viewContainerRef: this.vcRef,
+      // context: 'TEST',
+      fullscreen: false,
+    };
+
+    return this._modalService.showModal(modalComponent, options);
   }
 
   private formatData() {
-    const data = this.ticketForm.value;
+    const data: IBillingRequest = this.ticketForm.value;
+
+    data.company = CompanyUtil.buildSimpleCompany(this.company);
+    data.client = this.client;
+    data.tipoMoneda = this.currency;
+    data.details = this.billingDetail;
+    data.mtoOperGravadas = this.billingDetail.reduce((acc, value) => {
+      return acc + value.mtoBaseIgv;
+    }, 0);
+    data.mtoIGV = this.billingDetail.reduce((acc, value) => {
+      return acc + value.igv;
+    }, 0);
+    data.totalImpuestos = this.billingDetail.reduce((acc, value) => {
+      return acc + value.totalImpuestos;
+    }, 0);
+    data.valorVenta = this.billingDetail.reduce((acc, value) => {
+      return acc + value.mtoValorVenta;
+    }, 0);
+    data.mtoImpVenta = this.billingDetail.reduce((acc, value) => {
+      return acc + value.mtoValorVenta + value.totalImpuestos;
+    }, 0);
+    data.ublVersion = UBL_VERSION;
+    data.legends = [
+      {
+        code: '1000',
+        value: NumberUtil.buildLegend(data.mtoImpVenta),
+      },
+    ];
     return data;
   }
 }

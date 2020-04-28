@@ -31,3 +31,20 @@
 .label {
   color: #aaa;
 }
+
+.product-detail {
+  background-color: #282e39;
+  padding: 10px;
+}
+.product-detail-header {
+  color: white;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.product-detail-label {
+  color: white;
+  font-size: 12px;
+}

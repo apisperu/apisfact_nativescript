@@ -27,7 +27,7 @@ export class CompanyService {
     return of({});
   }
 
-  getActiveCompany(ruc: string): Observable<ICompany> {
+  getActiveCompany(): Observable<ICompany> {
     const company = getString('activeCompany');
     return company ? of(JSON.parse(company)) : of({});
   }

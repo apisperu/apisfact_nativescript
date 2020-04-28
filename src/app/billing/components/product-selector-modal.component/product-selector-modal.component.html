@@ -1,0 +1,38 @@
+<StackLayout class="page">
+  <StackLayout width="80%" class="modal-container">
+    <Label
+      class="my-label"
+      text="Ingresa la cantidad y añade los productos"
+      textWrap="true"
+    ></Label>
+    <ScrollView height="50%">
+      <StackLayout class="content">
+        <StackLayout
+          *ngFor="let product of productList"
+          class="item"
+          orientation="horizontal"
+        >
+          <StackLayout width="65%">
+            <Label text="{{ product.descripcion }}"> </Label>
+            <Label text="Cod: {{ product.codProducto }}"></Label>
+            <Label text="S/ {{ product.mtoValorUnitario }}"></Label>
+          </StackLayout>
+          <TextField
+            width="35%"
+            hint="Cant"
+            class="input"
+            [ngModel]="product.cantidad"
+            (ngModelChange)="product.cantidad = $event"
+          ></TextField>
+        </StackLayout>
+      </StackLayout>
+    </ScrollView>
+    <StackLayout>
+      <Button
+        class="btn-secondary"
+        text="Añadir productos"
+        (tap)="onAddButtonTapped()"
+      ></Button>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>

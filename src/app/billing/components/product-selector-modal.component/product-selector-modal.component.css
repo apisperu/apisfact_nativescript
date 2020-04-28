@@ -1,0 +1,19 @@
+.my-label {
+  font-size: 20px;
+}
+
+.modal-container {
+  margin: 50px;
+}
+.content {
+  margin-top: 30px;
+}
+.active {
+  background-color: #71a202;
+}
+.content .item {
+  margin-bottom: 20px;
+}
+.content label {
+  font-size: 13px;
+}

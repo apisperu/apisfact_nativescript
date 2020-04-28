@@ -7,6 +7,9 @@ import { TicketComponent } from './views/ticket/ticket.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
+import { CurrencySelectorModalComponent } from './components/currency-selector-modal.component/currency-selector-modal.component';
+import { ClientSelectorModalComponent } from './components/client-selector-modal.component/client-selector-modal.component';
+import { ProductSelectorModalComponent } from './components/product-selector-modal.component/product-selector-modal.component';
 
 @NgModule({
   imports: [
@@ -16,7 +19,18 @@ import { NativeScriptFormsModule } from 'nativescript-angular/forms';
     ReactiveFormsModule,
     NativeScriptFormsModule,
   ],
-  declarations: [ListComponent, TicketComponent],
+  declarations: [
+    ListComponent,
+    TicketComponent,
+    CurrencySelectorModalComponent,
+    ClientSelectorModalComponent,
+    ProductSelectorModalComponent,
+  ],
+  entryComponents: [
+    CurrencySelectorModalComponent,
+    ClientSelectorModalComponent,
+    ProductSelectorModalComponent,
+  ],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class BillingModule {}

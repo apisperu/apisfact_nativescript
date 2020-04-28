@@ -21,7 +21,7 @@ export class ListComponent implements OnInit {
   ) {
     this._presenter.setView(this);
     this._activatedRoute.params.subscribe((data) => {
-      this._presenter.getCompany(data.id);
+      this._presenter.getActiveCompany();
     });
   }
 
@@ -29,7 +29,7 @@ export class ListComponent implements OnInit {
     this._page.actionBarHidden = true;
   }
 
-  setCompany(data: ICompany) {
+  setActiveCompany(data: ICompany) {
     this.company = data;
   }
   onBackTapped() {
