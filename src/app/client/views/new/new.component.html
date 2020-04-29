@@ -15,7 +15,20 @@
           hint=""
           class="input"
         ></TextField>
-        <Label class="label" text="DNI"></Label>
+        <Label class="label" text="Tipo documento"></Label>
+        <StackLayout orientation="horizontal">
+          <TextField
+            width="50%"
+            formControlName="tipoDoc"
+            class="input"
+          ></TextField>
+          <Button
+            width="50%"
+            text="Seleccionar"
+            (tap)="onSelectDocumentType()"
+          ></Button>
+        </StackLayout>
+        <Label class="label" text="N° Documento"></Label>
         <TextField formControlName="numDoc" hint="" class="input"></TextField>
         <Label class="label" text="Dirección"></Label>
         <TextField formControlName="address" hint="" class="input"></TextField>

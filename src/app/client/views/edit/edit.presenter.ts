@@ -29,8 +29,13 @@ export class EditPresenter {
 
   getClient(docNumber: any) {
     this._clientService.getByDocNumner(docNumber).subscribe((data) => {
-      console.log({ data });
       this._view.setData(data);
+    });
+  }
+
+  getDocumentTypeList() {
+    this._clientService.getDocumentTypeList().subscribe((data) => {
+      this._view.setDocumentTypeList(data);
     });
   }
 }

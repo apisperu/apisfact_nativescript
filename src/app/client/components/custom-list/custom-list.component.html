@@ -13,6 +13,15 @@
     <Label class="list-title" [text]="item.rznSocial"></Label>
     <Label class="list-description">
       <FormattedString>
+        <Span class="description-key" text="Tipo Doc: "></Span>
+        <Span
+          class="description-value"
+          [text]="item.tipoDoc === '1' ? 'DNI' : 'RUC'"
+        ></Span>
+      </FormattedString>
+    </Label>
+    <Label class="list-description">
+      <FormattedString>
         <Span class="description-key" text="N° Doc: "></Span>
         <Span class="description-value" [text]="item.numDoc"></Span>
       </FormattedString>

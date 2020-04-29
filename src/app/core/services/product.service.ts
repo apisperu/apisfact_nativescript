@@ -18,7 +18,6 @@ export class ProductService {
   }
 
   save(data): Observable<any> {
-    console.log({ data });
     const productList = this.getProductList();
     productList.push(data);
     this.saveProductList(productList);

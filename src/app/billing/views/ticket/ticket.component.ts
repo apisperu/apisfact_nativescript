@@ -19,21 +19,26 @@ import { IClient } from '~/app/client/models/client.model';
 import { ProductSelectorModalComponent } from '../../components/product-selector-modal.component/product-selector-modal.component';
 import { IProductExtended } from '~/app/product/models/product-extended.model';
 import { NumberUtil } from '~/app/core/utils/number.util';
+import { DocumentTypeSelectorModalComponent } from '../../components/document-type-selector-modal.component/document-type-selector-modal.component';
+import { DatePipe } from '@angular/common';
 
 const IGV_PERCENTAGE = 18;
 const TIPO_AFECT_IGV = 10;
 const UBL_VERSION = '2.1';
+const TIPO_DOC_BOLETA = '03';
+const TIPO_DOC_FACTURA = '01';
 @Component({
   selector: 'app-billing-ticket',
   moduleId: module.id,
   templateUrl: './ticket.component.html',
   styleUrls: ['./ticket.component.css'],
-  providers: [TicketPresenter],
+  providers: [TicketPresenter, DatePipe],
 })
 export class TicketComponent implements OnInit {
   ticketForm: FormGroup;
   company: ICompany = null;
   client: IClient = null;
+  documentType = TIPO_DOC_BOLETA;
   currency = 'PEN';
   billingDetail: IBillingDetailRequest[] = [];
 
@@ -43,7 +48,8 @@ export class TicketComponent implements OnInit {
     private _router: Router,
     private _fb: FormBuilder,
     private vcRef: ViewContainerRef,
-    private _modalService: ModalDialogService
+    private _modalService: ModalDialogService,
+    private _datePipe: DatePipe
   ) {
     this._presenter.setView(this);
     this.setForm();
@@ -56,11 +62,9 @@ export class TicketComponent implements OnInit {
 
   setForm() {
     this.ticketForm = this._fb.group({
-      tipoOperacion: ['0101', []], // fijo
-      tipoDoc: ['03', []], // fijo
+      tipoDoc: [{ value: 'Boleta', disabled: true }, []],
       serie: ['B001', []],
       correlativo: ['1', []],
-      fechaEmision: ['2019-10-27T00:00:00-05:00', []], // set current date
       tipoMoneda: [
         {
           value: this.currency,
@@ -71,19 +75,14 @@ export class TicketComponent implements OnInit {
     });
   }
 
-  onSelectedCurrency(currency) {
-    console.log({ currency });
-  }
-
   onSaveButtonTapped() {
     const request = this.formatData();
-    console.log(request);
+    console.log({ request });
     this._presenter.save(request);
   }
 
   onSuccessSaved(response) {
-    console.log({ response });
-    console.log(response.sunatResponse);
+    console.log({ response: response.sunatResponse });
   }
 
   onBackTapped() {
@@ -94,8 +93,17 @@ export class TicketComponent implements OnInit {
     this.company = company;
   }
 
+  onSelectDocumentType() {
+    this.createModal(DocumentTypeSelectorModalComponent).then((data: any) => {
+      if (!data) return;
+      this.documentType = data.code;
+      this.ticketForm.get('tipoDoc').setValue(data.value);
+    });
+  }
+
   onSelectCurrency() {
     this.createModal(CurrencySelectorModalComponent).then((data: string) => {
+      if (!data) return;
       this.currency = data;
       this.ticketForm.get('tipoMoneda').setValue(data);
     });
@@ -103,6 +111,7 @@ export class TicketComponent implements OnInit {
 
   onSelectClient() {
     this.createModal(ClientSelectorModalComponent).then((data: IClient) => {
+      if (!data) return;
       this.client = data;
       this.ticketForm.get('client').setValue(data.rznSocial);
     });
@@ -111,6 +120,7 @@ export class TicketComponent implements OnInit {
   onSelectProduct() {
     this.createModal(ProductSelectorModalComponent).then(
       (data: IProductExtended[]) => {
+        if (!data || data.length === 0) return;
         this.billingDetail = data.map((item) => {
           const subTotal = item.mtoValorUnitario * item.cantidad;
           const totalIgv = (subTotal * IGV_PERCENTAGE) / 100;
@@ -136,7 +146,6 @@ export class TicketComponent implements OnInit {
   createModal(modalComponent: Type<unknown>): Promise<any> {
     const options: ModalDialogOptions = {
       viewContainerRef: this.vcRef,
-      // context: 'TEST',
       fullscreen: false,
     };
 
@@ -145,7 +154,12 @@ export class TicketComponent implements OnInit {
 
   private formatData() {
     const data: IBillingRequest = this.ticketForm.value;
-
+    data.fechaEmision = this._datePipe.transform(
+      Date.now(),
+      'yyyy-MM-ddTHH:mm:ssZZZZZ'
+    );
+    data.tipoDoc = this.documentType;
+    data.tipoOperacion = '0101';
     data.company = CompanyUtil.buildSimpleCompany(this.company);
     data.client = this.client;
     data.tipoMoneda = this.currency;

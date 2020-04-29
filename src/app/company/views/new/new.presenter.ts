@@ -44,10 +44,6 @@ export class NewPresenter {
   }
 
   saveCompany(data: any) {
-    // this.checkIfFileExist(data.certificado);
-    // this.toBase64(data.certificado);
-    // this.checkIfFileExist(data.logo);
-    // this.toBase64(data.logo);
     this._companyService
       .save({
         ...data,
@@ -58,11 +54,6 @@ export class NewPresenter {
         this._view.onSuccessSave(response);
         this._router.navigate(['company']);
       });
-  }
-
-  private checkIfFileExist(path: string) {
-    let exists = File.exists(path);
-    console.log(`Does ${path} exists: ` + exists);
   }
 
   private toBase64(path) {

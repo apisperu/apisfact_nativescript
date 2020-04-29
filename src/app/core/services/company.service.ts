@@ -18,7 +18,6 @@ export class CompanyService {
   }
 
   save(data): Observable<any> {
-    console.log({ data });
     return this._http.post(Endpoint.company(), data);
   }
 

@@ -51,6 +51,20 @@ export class ClientService {
     return of({});
   }
 
+  getDocumentTypeList(): Observable<any> {
+    const list = [
+      {
+        code: '1',
+        value: 'DNI',
+      },
+      {
+        code: '6',
+        value: 'RUC',
+      },
+    ];
+    return of(list);
+  }
+
   private getClientList(): any[] {
     const clientList = getString('clientList');
     return clientList ? JSON.parse(clientList) : [];

@@ -2,7 +2,6 @@ export class NumberUtil {
   public static buildLegend(num: number): string {
     num = parseFloat(num.toFixed(2));
     const arrayNumber = `${num}`.split('.');
-    console.log({ arrayNumber });
     const ones = [
       '',
       'uno',

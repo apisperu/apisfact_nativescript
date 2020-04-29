@@ -33,7 +33,6 @@ export class EditPresenter {
 
   getProduct(codProduct: any) {
     this._productService.getByCode(codProduct).subscribe((data) => {
-      console.log({ data });
       this._view.setData(data);
     });
   }

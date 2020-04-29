@@ -8,8 +8,9 @@ import { NewComponent } from './views/new/new.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 import { EditComponent } from './views/edit/edit.component';
+import { DocumentTypeSelectorModalComponent } from './components/document-type-selector-modal.component/document-type-selector-modal.component';
 
-const components = [CustomListComponent];
+const components = [CustomListComponent, DocumentTypeSelectorModalComponent];
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ const components = [CustomListComponent];
     NativeScriptFormsModule,
   ],
   declarations: [...components, ListComponent, NewComponent, EditComponent],
+  entryComponents: [...components],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class ClientModule {}

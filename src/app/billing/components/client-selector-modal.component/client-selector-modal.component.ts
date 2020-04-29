@@ -19,8 +19,8 @@ export class ClientSelectorModalComponent {
     this.getClients();
   }
 
-  onSelectOptionTapped(code: string): void {
-    this._params.closeCallback(code);
+  onSelectOptionTapped(client: IClient): void {
+    this._params.closeCallback(client);
   }
 
   getClients() {
