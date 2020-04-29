@@ -21,6 +21,8 @@ import { IProductExtended } from '~/app/product/models/product-extended.model';
 import { NumberUtil } from '~/app/core/utils/number.util';
 import { DocumentTypeSelectorModalComponent } from '../../components/document-type-selector-modal.component/document-type-selector-modal.component';
 import { DatePipe } from '@angular/common';
+import { SimpleModalComponent } from '~/app/shared/simple-modal/simple-modal.component';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 const IGV_PERCENTAGE = 18;
 const TIPO_AFECT_IGV = 10;
@@ -45,6 +47,7 @@ export class TicketComponent implements OnInit {
   constructor(
     private _page: Page,
     private _presenter: TicketPresenter,
+    private _routerExtension: RouterExtensions,
     private _router: Router,
     private _fb: FormBuilder,
     private vcRef: ViewContainerRef,
@@ -83,6 +86,12 @@ export class TicketComponent implements OnInit {
 
   onSuccessSaved(response) {
     console.log({ response: response.sunatResponse });
+    this.createModal(SimpleModalComponent, {
+      title: 'Envío exitoso',
+      buttonText: 'Volver',
+    }).then((data) => {
+      this._routerExtension.back();
+    });
   }
 
   onBackTapped() {
@@ -143,9 +152,10 @@ export class TicketComponent implements OnInit {
     );
   }
 
-  createModal(modalComponent: Type<unknown>): Promise<any> {
+  createModal(modalComponent: Type<unknown>, params?: any): Promise<any> {
     const options: ModalDialogOptions = {
       viewContainerRef: this.vcRef,
+      context: params,
       fullscreen: false,
     };
 

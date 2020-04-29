@@ -1,0 +1,12 @@
+<StackLayout class="page modal-wrapper">
+  <StackLayout width="80%" class="modal-container">
+    <Label class="my-label text-center" [text]="title" textWrap="false"></Label>
+    <StackLayout>
+      <Button
+        class="btn-secondary"
+        [text]="buttonText"
+        (tap)="onSelectButtonTapped()"
+      ></Button>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>
