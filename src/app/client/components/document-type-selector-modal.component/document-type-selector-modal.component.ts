@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { ClientService, IItem } from '~/app/core/services/client.service';
 
 @Component({
   moduleId: module.id,
@@ -8,28 +9,28 @@ import { RouterExtensions } from 'nativescript-angular/router';
   styleUrls: ['./document-type-selector-modal.component.css'],
 })
 export class DocumentTypeSelectorModalComponent {
-  documentTypeList = [
-    {
-      code: '1',
-      value: 'DNI',
-    },
-    {
-      code: '6',
-      value: 'RUC',
-    },
-  ];
+  personalDocumentTypeList = [] as IItem[];
   constructor(
-    private _params: ModalDialogParams,
-    private router: RouterExtensions
-  ) {}
+    private params: ModalDialogParams,
+    private router: RouterExtensions,
+    private clientService: ClientService
+  ) {
+    this.getPersonalDocumentType();
+  }
 
-  onSelectOptionTapped(code: any): void {
-    this._params.closeCallback(code);
+  getPersonalDocumentType() {
+    this.clientService.getPersonalDocumentTypeList().subscribe((data) => {
+      this.personalDocumentTypeList = data;
+    });
+  }
+
+  onSelectOptionTapped(document: IItem): void {
+    this.params.closeCallback(document);
   }
   onBack(): void {
     this.router.back();
   }
   onClose(): void {
-    this._params.closeCallback('return value');
+    this.params.closeCallback('return value');
   }
 }

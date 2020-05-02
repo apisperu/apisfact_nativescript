@@ -3,7 +3,6 @@ import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { IProduct } from '~/app/product/models/product.model';
 import { ProductService } from '~/app/core/services/product.service';
-import { Button } from 'tns-core-modules/ui/button/button';
 import {
   IProductExtended,
   ProductExtended,

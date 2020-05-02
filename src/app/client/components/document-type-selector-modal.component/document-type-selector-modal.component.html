@@ -6,7 +6,7 @@
       textWrap="true"
     ></Label>
     <Button
-      *ngFor="let document of documentTypeList"
+      *ngFor="let document of personalDocumentTypeList"
       [text]="document.value"
       (tap)="onSelectOptionTapped(document)"
     ></Button>

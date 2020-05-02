@@ -9,9 +9,11 @@ import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 export class SimpleModalComponent {
   title = '';
   buttonText = '';
+  description = '';
   constructor(private _params: ModalDialogParams) {
     this.title = _params.context.title;
     this.buttonText = _params.context.buttonText;
+    this.description = _params.context.description;
   }
 
   onSelectButtonTapped(): void {

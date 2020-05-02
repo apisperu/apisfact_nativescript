@@ -8,6 +8,7 @@ import {
   ModalDialogService,
 } from 'nativescript-angular/modal-dialog';
 import { DocumentTypeSelectorModalComponent } from '../../components/document-type-selector-modal.component/document-type-selector-modal.component';
+import { SimpleModalComponent } from '~/app/shared/simple-modal/simple-modal.component';
 
 @Component({
   selector: 'app-client-new',
@@ -21,23 +22,23 @@ export class NewComponent implements OnInit {
   documentType = null;
 
   constructor(
-    private _page: Page,
-    private _presenter: NewPresenter,
-    private _router: Router,
-    private _fb: FormBuilder,
+    private page: Page,
+    private presenter: NewPresenter,
+    private router: Router,
+    private fb: FormBuilder,
     private vcRef: ViewContainerRef,
-    private _modalService: ModalDialogService
+    private modalService: ModalDialogService
   ) {
-    this._presenter.setView(this);
+    this.presenter.setView(this);
     this.setForm();
   }
 
   ngOnInit(): void {
-    this._page.actionBarHidden = true;
+    this.page.actionBarHidden = true;
   }
 
   setForm() {
-    this.clientForm = this._fb.group({
+    this.clientForm = this.fb.group({
       tipoDoc: [{ value: 'DNI', disabled: true }, []],
       numDoc: [null, []],
       rznSocial: [null, []],
@@ -53,17 +54,8 @@ export class NewComponent implements OnInit {
     });
   }
 
-  createModal(modalComponent: Type<unknown>): Promise<any> {
-    const options: ModalDialogOptions = {
-      viewContainerRef: this.vcRef,
-      fullscreen: false,
-    };
-
-    return this._modalService.showModal(modalComponent, options);
-  }
-
   onBackTapped() {
-    this._router.navigate(['client']);
+    this.router.navigate(['client']);
   }
 
   onSaveButtonTapped() {
@@ -72,10 +64,29 @@ export class NewComponent implements OnInit {
     data.address = {
       direccion: data.address,
     };
-    this._presenter.saveClient(data);
+    this.presenter.saveClient(data);
   }
 
-  onSuccessSave(result) {
-    console.log({ result });
+  onSuccessSave() {
+    this.createModal(SimpleModalComponent, {
+      title: 'Guardado exitoso',
+      description: 'El cliente se guardó correctamente',
+      buttonText: 'Volver',
+    }).then((data: any) => {
+      this.router.navigate(['client']);
+    });
+  }
+
+  private createModal(
+    modalComponent: Type<unknown>,
+    params?: any
+  ): Promise<any> {
+    const options: ModalDialogOptions = {
+      viewContainerRef: this.vcRef,
+      context: params,
+      fullscreen: false,
+    };
+
+    return this.modalService.showModal(modalComponent, options);
   }
 }

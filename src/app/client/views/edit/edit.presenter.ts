@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { EditComponent } from './edit.component';
 import { Router } from '@angular/router';
-import { ClientService } from '~/app/core/services/client.service';
+import { ClientService, IItem } from '~/app/core/services/client.service';
+import { IClient } from '../../models/client.model';
 
 @Injectable()
 export class EditPresenter {
@@ -14,28 +15,29 @@ export class EditPresenter {
     this._view = view;
   }
 
-  updateClient(data: any) {
-    this._clientService.update(data).subscribe((response) => {
-      this._view.onSuccessSave(response);
-      this._router.navigate(['client']);
+  updateClient(data: IClient) {
+    this._clientService.update(data).subscribe(() => {
+      this._view.onSuccessSave();
     });
   }
 
   deleteClient(docNumber) {
-    this._clientService.delete(docNumber).subscribe((response) => {
-      this._router.navigate(['client']);
+    this._clientService.delete(docNumber).subscribe(() => {
+      this._view.onSuccessDelete();
     });
   }
 
-  getClient(docNumber: any) {
+  getClient(docNumber: string) {
     this._clientService.getByDocNumner(docNumber).subscribe((data) => {
       this._view.setData(data);
     });
   }
 
-  getDocumentTypeList() {
-    this._clientService.getDocumentTypeList().subscribe((data) => {
-      this._view.setDocumentTypeList(data);
-    });
+  getPersonalDocumentTypeList() {
+    this._clientService
+      .getPersonalDocumentTypeList()
+      .subscribe((data: IItem[]) => {
+        this._view.setDocumentTypeList(data);
+      });
   }
 }

@@ -1,6 +1,12 @@
-.my-label {
+.title {
   font-size: 20px;
   margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.description {
+  font-size: 14px;
+  color: black;
   margin-bottom: 40px;
 }
 

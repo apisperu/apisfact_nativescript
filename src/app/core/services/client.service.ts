@@ -6,22 +6,28 @@ import {
   getString,
   setString,
 } from 'tns-core-modules/application-settings/application-settings';
+import { IClient } from '~/app/client/models/client.model';
+
+export interface IItem {
+  code: string;
+  value: string;
+}
 
 @Injectable()
 export class ClientService {
   constructor(private _http: HttpClient) {}
 
-  getList(): Observable<any> {
+  getList(): Observable<IClient[]> {
     const clientList = this.getClientList();
     return of(clientList);
   }
 
-  getByDocNumner(numDoc): Observable<any> {
+  getByDocNumner(numDoc): Observable<IClient> {
     const clientList = this.getClientList();
     return of(clientList.find((item) => item.numDoc === numDoc));
   }
 
-  save(data): Observable<any> {
+  save(data: IClient): Observable<any> {
     const clientList = this.getClientList();
     clientList.push(data);
     this.saveClientList(clientList);
@@ -51,8 +57,8 @@ export class ClientService {
     return of({});
   }
 
-  getDocumentTypeList(): Observable<any> {
-    const list = [
+  getPersonalDocumentTypeList(): Observable<IItem[]> {
+    const list: IItem[] = [
       {
         code: '1',
         value: 'DNI',
@@ -65,7 +71,7 @@ export class ClientService {
     return of(list);
   }
 
-  private getClientList(): any[] {
+  private getClientList(): IClient[] {
     const clientList = getString('clientList');
     return clientList ? JSON.parse(clientList) : [];
   }

@@ -1,6 +1,11 @@
 <StackLayout class="page modal-wrapper">
   <StackLayout width="80%" class="modal-container">
-    <Label class="my-label text-center" [text]="title" textWrap="false"></Label>
+    <Label class="title text-center" [text]="title" textWrap="false"></Label>
+    <Label
+      class="description text-center"
+      [text]="description"
+      textWrap="true"
+    ></Label>
     <StackLayout>
       <Button
         class="btn-secondary"
