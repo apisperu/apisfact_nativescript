@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { ListPresenter } from './list.presenter';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 @Component({
   selector: 'app-company-list',
@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
   constructor(
     private _page: Page,
     private _presenter: ListPresenter,
-    private _router: Router
+    private _router: RouterExtensions
   ) {
     this._presenter.setView(this);
   }

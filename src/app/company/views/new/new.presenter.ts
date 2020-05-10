@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { knownFolders, path, File, Folder } from 'tns-core-modules/file-system';
+import { File } from 'tns-core-modules/file-system';
 
 import { NewComponent } from './new.component';
 import { CompanyService } from '~/app/core/services/company.service';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 import { FilePickerService } from '~/app/core/services/file-picker.service';
 
 declare var android;
@@ -14,7 +14,7 @@ export class NewPresenter {
 
   constructor(
     private _companyService: CompanyService,
-    private _router: Router,
+    private _router: RouterExtensions,
     private _filePickerService: FilePickerService
   ) {}
 

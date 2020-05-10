@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 @Component({
   selector: 'app-custom-list',
@@ -11,7 +11,7 @@ export class CustomListComponent implements OnInit {
   @Input()
   list = [];
 
-  constructor(private _router: Router) {}
+  constructor(private _router: RouterExtensions) {}
 
   ngOnInit(): void {}
 

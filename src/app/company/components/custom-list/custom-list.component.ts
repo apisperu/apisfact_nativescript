@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 import { ICompany } from '../../models/company.model';
 import { CompanyService } from '~/app/core/services/company.service';
 
@@ -14,7 +14,7 @@ export class CustomListComponent implements OnInit {
   list = [];
 
   constructor(
-    private _router: Router,
+    private _router: RouterExtensions,
     private _companyService: CompanyService
   ) {}
 

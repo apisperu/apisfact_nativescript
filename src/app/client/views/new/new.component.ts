@@ -1,7 +1,7 @@
 import { Component, OnInit, Type, ViewContainerRef } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { NewPresenter } from './new.presenter';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import {
   ModalDialogOptions,
@@ -24,7 +24,7 @@ export class NewComponent implements OnInit {
   constructor(
     private page: Page,
     private presenter: NewPresenter,
-    private router: Router,
+    private router: RouterExtensions,
     private fb: FormBuilder,
     private vcRef: ViewContainerRef,
     private modalService: ModalDialogService
@@ -69,6 +69,7 @@ export class NewComponent implements OnInit {
 
   onSuccessSave() {
     this.createModal(SimpleModalComponent, {
+      image: 'success',
       title: 'Guardado exitoso',
       description: 'El cliente se guardó correctamente',
       buttonText: 'Volver',

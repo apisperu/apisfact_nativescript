@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewContainerRef, Type } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { TicketPresenter } from './ticket.presenter';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ICompany } from '~/app/company/models/company.model';
 import {
@@ -44,8 +43,7 @@ export class TicketComponent implements OnInit {
   constructor(
     private _page: Page,
     private _presenter: TicketPresenter,
-    private _routerExtension: RouterExtensions,
-    private _router: Router,
+    private _router: RouterExtensions,
     private _fb: FormBuilder,
     private vcRef: ViewContainerRef,
     private _modalService: ModalDialogService
@@ -81,16 +79,18 @@ export class TicketComponent implements OnInit {
 
   onSuccessSaved(response: IBillingResponse) {
     this.createModal(SimpleModalComponent, {
+      image: 'success',
       title: 'Envío exitoso',
       description: response.sunatResponse.cdrResponse.description,
       buttonText: 'Volver',
     }).then((data) => {
-      this._routerExtension.back();
+      this._router.back();
     });
   }
 
   onErrorSaved(response: IBillingResponse) {
     this.createModal(SimpleModalComponent, {
+      image: 'error',
       title: 'Ocurrió un error',
       description: response.sunatResponse.error.message,
       buttonText: 'Cerrar',

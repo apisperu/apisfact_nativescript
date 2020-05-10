@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { EditPresenter } from './edit.presenter';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IProduct } from '../../models/product.model';
 
@@ -19,7 +20,7 @@ export class EditComponent implements OnInit {
   constructor(
     private _page: Page,
     private _presenter: EditPresenter,
-    private _router: Router,
+    private _router: RouterExtensions,
     private _fb: FormBuilder,
     private _activatedRoute: ActivatedRoute
   ) {

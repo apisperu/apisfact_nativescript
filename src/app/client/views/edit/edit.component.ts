@@ -1,7 +1,8 @@
 import { Component, OnInit, Type, ViewContainerRef } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { EditPresenter } from './edit.presenter';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DocumentTypeSelectorModalComponent } from '../../components/document-type-selector-modal.component/document-type-selector-modal.component';
 import {
@@ -27,7 +28,7 @@ export class EditComponent implements OnInit {
   constructor(
     private page: Page,
     private presenter: EditPresenter,
-    private router: Router,
+    private router: RouterExtensions,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private vcRef: ViewContainerRef,
@@ -96,6 +97,7 @@ export class EditComponent implements OnInit {
 
   onSuccessSave() {
     this.createModal(SimpleModalComponent, {
+      image: 'success',
       title: 'Guardado exitoso',
       description: 'El cliente se actualizó correctamente',
       buttonText: 'Volver',
@@ -106,6 +108,7 @@ export class EditComponent implements OnInit {
 
   onSuccessDelete() {
     this.createModal(SimpleModalComponent, {
+      image: 'success',
       title: 'Eliminación exitosa',
       description: 'El cliente se eliminó correctamente',
       buttonText: 'Volver',

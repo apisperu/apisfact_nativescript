@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { EditComponent } from './edit.component';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 import { ProductService } from '~/app/core/services/product.service';
 import { IProduct } from '../../models/product.model';
 
@@ -11,7 +11,7 @@ export class EditPresenter {
 
   constructor(
     private _productService: ProductService,
-    private _router: Router
+    private _router: RouterExtensions
   ) {}
 
   setView(view: EditComponent) {

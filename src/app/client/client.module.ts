@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 import { EditComponent } from './views/edit/edit.component';
 import { DocumentTypeSelectorModalComponent } from './components/document-type-selector-modal.component/document-type-selector-modal.component';
+import { SharedModule } from '../shared/shared.module';
 
 const components = [CustomListComponent, DocumentTypeSelectorModalComponent];
 
@@ -18,6 +19,7 @@ const components = [CustomListComponent, DocumentTypeSelectorModalComponent];
     ClientRoutingModule,
     ReactiveFormsModule,
     NativeScriptFormsModule,
+    SharedModule,
   ],
   declarations: [...components, ListComponent, NewComponent, EditComponent],
   entryComponents: [...components],

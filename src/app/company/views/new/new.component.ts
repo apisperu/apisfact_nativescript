@@ -3,7 +3,7 @@ import { Page } from 'tns-core-modules/ui/page/page';
 import { NewPresenter } from './new.presenter';
 import { Label } from 'tns-core-modules/ui/label/label';
 import { TextField } from 'tns-core-modules/ui/text-field/text-field';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 @Component({
   selector: 'app-company-new',
@@ -28,7 +28,7 @@ export class NewComponent implements OnInit {
   constructor(
     private _page: Page,
     private _presenter: NewPresenter,
-    private _router: Router
+    private _router: RouterExtensions
   ) {
     this._presenter.setView(this);
   }

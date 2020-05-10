@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { NewPresenter } from './new.presenter';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IProduct } from '../../models/product.model';
 
@@ -18,7 +18,7 @@ export class NewComponent implements OnInit {
   constructor(
     private _page: Page,
     private _presenter: NewPresenter,
-    private _router: Router,
+    private _router: RouterExtensions,
     private _fb: FormBuilder
   ) {
     this._presenter.setView(this);

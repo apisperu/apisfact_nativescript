@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { EditComponent } from './edit.component';
-import { Router } from '@angular/router';
 import { ClientService, IItem } from '~/app/core/services/client.service';
 import { IClient } from '../../models/client.model';
 
@@ -9,7 +8,7 @@ import { IClient } from '../../models/client.model';
 export class EditPresenter {
   private _view: EditComponent;
 
-  constructor(private _clientService: ClientService, private _router: Router) {}
+  constructor(private _clientService: ClientService) {}
 
   setView(view: EditComponent) {
     this._view = view;

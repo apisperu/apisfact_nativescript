@@ -8,7 +8,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 import { AppStateService } from '../services/app-state.service';
 import { LoaderService } from '../services/loader.service';
@@ -21,7 +21,7 @@ export class ApiInterceptor implements HttpInterceptor {
   constructor(
     private appState: AppStateService,
     private loginService: LoginService,
-    private router: Router,
+    private router: RouterExtensions,
     private loaderService: LoaderService
   ) {}
 

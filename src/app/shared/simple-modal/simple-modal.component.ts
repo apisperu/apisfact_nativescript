@@ -10,10 +10,12 @@ export class SimpleModalComponent {
   title = '';
   buttonText = '';
   description = '';
+  image = '';
   constructor(private _params: ModalDialogParams) {
     this.title = _params.context.title;
     this.buttonText = _params.context.buttonText;
     this.description = _params.context.description;
+    this.image = _params.context.image;
   }
 
   onSelectButtonTapped(): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 @Component({
   selector: 'app-custom-card',
@@ -17,7 +17,7 @@ export class CustomCardComponent implements OnInit {
   @Input()
   path = '';
 
-  constructor(private _router: Router) {}
+  constructor(private _router: RouterExtensions) {}
 
   ngOnInit(): void {}
 

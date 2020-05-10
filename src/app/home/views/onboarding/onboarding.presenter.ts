@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AppStateService } from '~/app/core/services/app-state.service';
 import { OnboardingComponent } from './onboarding.component';
 import { LoginService } from '~/app/core/services/login.service';
-import { Router } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 @Injectable()
 export class OnboardingPresenter {
@@ -12,7 +12,7 @@ export class OnboardingPresenter {
   constructor(
     private _appStateService: AppStateService,
     private _loginService: LoginService,
-    private _router: Router
+    private _router: RouterExtensions
   ) {}
 
   setView(view: OnboardingComponent) {
