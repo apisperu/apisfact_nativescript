@@ -14,16 +14,16 @@ export class ListComponent implements OnInit {
   companyList = [];
 
   constructor(
-    private _page: Page,
-    private _presenter: ListPresenter,
-    private _router: RouterExtensions
+    private page: Page,
+    private presenter: ListPresenter,
+    private router: RouterExtensions
   ) {
-    this._presenter.setView(this);
+    this.presenter.setView(this);
   }
 
   ngOnInit(): void {
-    this._page.actionBarHidden = true;
-    this._presenter.getCompanyList();
+    this.page.actionBarHidden = true;
+    this.presenter.getCompanyList();
   }
 
   setCompanyList(companyList) {
@@ -31,10 +31,10 @@ export class ListComponent implements OnInit {
   }
 
   onBackTapped() {
-    this._router.navigate(['home']);
+    this.router.navigate(['home']);
   }
 
   onAddButtonTapped() {
-    this._router.navigate(['company/new']);
+    this.router.navigate(['company/new']);
   }
 }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { RouterExtensions } from 'nativescript-angular/router';
 
 import { LoginComponent } from './login.component';
 import { LoginService } from '~/app/core/services/login.service';
@@ -8,25 +7,33 @@ import { setString } from 'tns-core-modules/application-settings/application-set
 
 @Injectable()
 export class LoginPresenter {
-  private _view: LoginComponent;
+  private view: LoginComponent;
 
   constructor(
-    private _loginService: LoginService,
-    private _router: RouterExtensions,
-    private _appStateService: AppStateService
+    private loginService: LoginService,
+    private appStateService: AppStateService
   ) {}
 
   setView(view: LoginComponent) {
-    this._view = view;
+    this.view = view;
   }
 
   auth(data: any) {
-    this._appStateService.set('username', data.username);
-    setString('username', data.username);
-    this._loginService.auth(data).subscribe((response) => {
-      setString('accessToken', response.token);
-      this._appStateService.set('accessToken', response.token);
-      this._router.navigate(['home'], { clearHistory: true });
-    });
+    this.loginService.auth(data).subscribe(
+      (response) => {
+        this.storeData({ ...data, ...response });
+        this.view.onSuccessAuth(response);
+      },
+      (err) => {
+        this.view.onErrorAuth(err);
+      }
+    );
+  }
+
+  private storeData({ username, token }) {
+    this.appStateService.set('username', username);
+    setString('username', username);
+    this.appStateService.set('accessToken', token);
+    setString('accessToken', token);
   }
 }

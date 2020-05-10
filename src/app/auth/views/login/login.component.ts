@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { LoginPresenter } from './login.presenter';
 import { TextField } from 'tns-core-modules/ui/text-field';
 import { Page } from 'tns-core-modules/ui/page/page';
+import { RouterExtensions } from 'nativescript-angular/router';
+import { ModalDialogService } from 'nativescript-angular/modal-dialog';
+import { SimpleModalComponent } from '~/app/shared/simple-modal/simple-modal.component';
 
 @Component({
   selector: 'app-login',
@@ -11,25 +14,50 @@ import { Page } from 'tns-core-modules/ui/page/page';
   providers: [LoginPresenter],
 })
 export class LoginComponent implements OnInit {
-  private _userTextField: TextField;
-  private _passwordTextField: TextField;
+  private userTextField: TextField;
+  private passwordTextField: TextField;
 
-  constructor(private _presenter: LoginPresenter, private _page: Page) {
-    this._presenter.setView(this);
+  constructor(
+    private presenter: LoginPresenter,
+    private router: RouterExtensions,
+    private page: Page,
+    private modalService: ModalDialogService,
+    private vcRef: ViewContainerRef
+  ) {
+    this.presenter.setView(this);
   }
 
   ngOnInit(): void {
-    this._page.actionBarHidden = true;
-    this._userTextField = <TextField>this._page.getViewById('userTextField');
-    this._passwordTextField = <TextField>(
-      this._page.getViewById('passwordTextField')
+    this.page.actionBarHidden = true;
+    this.userTextField = <TextField>this.page.getViewById('userTextField');
+    this.passwordTextField = <TextField>(
+      this.page.getViewById('passwordTextField')
     );
   }
 
   onLoginButtonTapped() {
-    this._presenter.auth({
-      username: this._userTextField.text,
-      password: this._passwordTextField.text,
+    this.presenter.auth({
+      username: this.userTextField.text,
+      password: this.passwordTextField.text,
     });
+  }
+
+  onErrorAuth(response) {
+    this.modalService
+      .showModal(SimpleModalComponent, {
+        viewContainerRef: this.vcRef,
+        fullscreen: false,
+        context: {
+          image: 'error',
+          title: 'Error en login',
+          description: 'Verifique sus datos',
+          buttonText: 'Cerrar',
+        },
+      })
+      .then(() => {});
+  }
+
+  onSuccessAuth(response) {
+    this.router.navigate(['home'], { clearHistory: true });
   }
 }

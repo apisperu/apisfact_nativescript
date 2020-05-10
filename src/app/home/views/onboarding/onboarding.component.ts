@@ -12,20 +12,20 @@ import { OnboardingPresenter } from './onboarding.presenter';
 export class OnboardingComponent implements OnInit {
   username = '';
 
-  constructor(private _page: Page, private _presenter: OnboardingPresenter) {
-    this._presenter.setView(this);
+  constructor(private page: Page, private presenter: OnboardingPresenter) {
+    this.presenter.setView(this);
   }
 
   ngOnInit(): void {
-    this._page.actionBarHidden = true;
+    this.page.actionBarHidden = true;
     this.setUsername();
   }
 
   setUsername() {
-    this.username = this._presenter.getUserName() || 'carlos';
+    this.username = this.presenter.getUserName();
   }
 
   onLogoutTapped() {
-    this._presenter.logout();
+    this.presenter.logout();
   }
 }

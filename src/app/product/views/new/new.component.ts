@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { NewPresenter } from './new.presenter';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IProduct } from '../../models/product.model';
+import { ModalDialogService } from 'nativescript-angular/modal-dialog';
+import { SimpleModalComponent } from '~/app/shared/simple-modal/simple-modal.component';
 
 @Component({
   selector: 'app-product-new',
@@ -16,21 +18,23 @@ export class NewComponent implements OnInit {
   productForm: FormGroup;
 
   constructor(
-    private _page: Page,
-    private _presenter: NewPresenter,
-    private _router: RouterExtensions,
-    private _fb: FormBuilder
+    private page: Page,
+    private presenter: NewPresenter,
+    private router: RouterExtensions,
+    private fb: FormBuilder,
+    private modalService: ModalDialogService,
+    private vcRef: ViewContainerRef
   ) {
-    this._presenter.setView(this);
+    this.presenter.setView(this);
     this.setForm();
   }
 
   ngOnInit(): void {
-    this._page.actionBarHidden = true;
+    this.page.actionBarHidden = true;
   }
 
   setForm() {
-    this.productForm = this._fb.group({
+    this.productForm = this.fb.group({
       codProducto: [null, []],
       unidad: [null, []],
       descripcion: [null, []],
@@ -39,15 +43,28 @@ export class NewComponent implements OnInit {
   }
 
   onBackTapped() {
-    this._router.navigate(['product']);
+    this.router.navigate(['product']);
   }
 
   onSaveButtonTapped() {
     const data: IProduct = this.productForm.value;
-    this._presenter.saveProduct(data);
+    this.presenter.saveProduct(data);
   }
 
   onSuccessSave(result) {
-    console.log({ result });
+    this.modalService
+      .showModal(SimpleModalComponent, {
+        viewContainerRef: this.vcRef,
+        fullscreen: false,
+        context: {
+          image: 'success',
+          title: 'Guardado exitoso',
+          description: 'El producto se guardó correctamente',
+          buttonText: 'Volver',
+        },
+      })
+      .then((data: any) => {
+        this.router.navigate(['product']);
+      });
   }
 }

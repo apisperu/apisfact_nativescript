@@ -7,33 +7,32 @@ import { IProduct } from '../../models/product.model';
 
 @Injectable()
 export class EditPresenter {
-  private _view: EditComponent;
+  private view: EditComponent;
 
   constructor(
-    private _productService: ProductService,
-    private _router: RouterExtensions
+    private productService: ProductService,
+    private router: RouterExtensions
   ) {}
 
   setView(view: EditComponent) {
-    this._view = view;
+    this.view = view;
   }
 
   updateProduct(data: IProduct) {
-    this._productService.update(data).subscribe((response) => {
-      this._view.onSuccessSave(response);
-      this._router.navigate(['product']);
+    this.productService.update(data).subscribe((response) => {
+      this.view.onSuccessSave(response);
     });
   }
 
   deleteProduct(codProduct) {
-    this._productService.delete(codProduct).subscribe((response) => {
-      this._router.navigate(['product']);
+    this.productService.delete(codProduct).subscribe((response) => {
+      this.view.onSuccessDelete(response);
     });
   }
 
   getProduct(codProduct: any) {
-    this._productService.getByCode(codProduct).subscribe((data) => {
-      this._view.setData(data);
+    this.productService.getByCode(codProduct).subscribe((data) => {
+      this.view.setData(data);
     });
   }
 }

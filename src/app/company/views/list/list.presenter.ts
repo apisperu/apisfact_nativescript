@@ -5,17 +5,17 @@ import { CompanyService } from '~/app/core/services/company.service';
 
 @Injectable()
 export class ListPresenter {
-  private _view: ListComponent;
+  private view: ListComponent;
 
-  constructor(private _companyService: CompanyService) {}
+  constructor(private companyService: CompanyService) {}
 
   setView(view: ListComponent) {
-    this._view = view;
+    this.view = view;
   }
 
   getCompanyList() {
-    this._companyService.getList().subscribe((response) => {
-      this._view.setCompanyList(response);
+    this.companyService.getList().subscribe((response) => {
+      this.view.setCompanyList(response);
     });
   }
 }

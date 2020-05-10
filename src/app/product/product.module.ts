@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 import { EditComponent } from './views/edit/edit.component';
 import { ProductRoutingModule } from './product-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 const components = [CustomListComponent];
 
@@ -17,6 +18,7 @@ const components = [CustomListComponent];
     ProductRoutingModule,
     ReactiveFormsModule,
     NativeScriptFormsModule,
+    SharedModule,
   ],
   declarations: [...components, ListComponent, NewComponent, EditComponent],
   schemas: [NO_ERRORS_SCHEMA],

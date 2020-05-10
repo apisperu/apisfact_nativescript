@@ -7,24 +7,24 @@ import { RouterExtensions } from 'nativescript-angular/router';
 
 @Injectable()
 export class OnboardingPresenter {
-  private _view: OnboardingComponent;
+  private view: OnboardingComponent;
 
   constructor(
-    private _appStateService: AppStateService,
-    private _loginService: LoginService,
-    private _router: RouterExtensions
+    private appStateService: AppStateService,
+    private loginService: LoginService,
+    private router: RouterExtensions
   ) {}
 
   setView(view: OnboardingComponent) {
-    this._view = view;
+    this.view = view;
   }
 
   getUserName(): string {
-    return this._appStateService.get('username');
+    return this.appStateService.get('username');
   }
 
   logout() {
-    this._loginService.logout();
-    this._router.navigate(['login']);
+    this.loginService.logout();
+    this.router.navigate(['login']);
   }
 }

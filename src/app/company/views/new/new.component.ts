@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { NewPresenter } from './new.presenter';
 import { Label } from 'tns-core-modules/ui/label/label';
 import { TextField } from 'tns-core-modules/ui/text-field/text-field';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { SimpleModalComponent } from '~/app/shared/simple-modal/simple-modal.component';
+import { ModalDialogService } from 'nativescript-angular/modal-dialog';
 
 @Component({
   selector: 'app-company-new',
@@ -14,82 +16,112 @@ import { RouterExtensions } from 'nativescript-angular/router';
 })
 export class NewComponent implements OnInit {
   companyList = [];
-  private _certificatePath = '';
-  private _logoPath = '';
-  private _certificateLabel: Label;
-  private _logoLabel: Label;
+  private certificatePath = '';
+  private logoPath = '';
+  private certificateLabel: Label;
+  private logoLabel: Label;
 
-  private _businessNameTextField: TextField;
-  private _rucTextField: TextField;
-  private _solUserTextField: TextField;
-  private _solPasswordTextField: TextField;
-  private _addressTextField: TextField;
+  private businessNameTextField: TextField;
+  private rucTextField: TextField;
+  private solUserTextField: TextField;
+  private solPasswordTextField: TextField;
+  private addressTextField: TextField;
 
   constructor(
-    private _page: Page,
-    private _presenter: NewPresenter,
-    private _router: RouterExtensions
+    private page: Page,
+    private presenter: NewPresenter,
+    private router: RouterExtensions,
+    private modalService: ModalDialogService,
+    private vcRef: ViewContainerRef
   ) {
-    this._presenter.setView(this);
+    this.presenter.setView(this);
   }
 
   ngOnInit(): void {
-    this._page.actionBarHidden = true;
-    this._certificateLabel = <Label>this._page.getViewById('certificateLabel');
-    this._logoLabel = <Label>this._page.getViewById('logoLabel');
-    this._businessNameTextField = <TextField>(
-      this._page.getViewById('businessNameTextField')
+    this.page.actionBarHidden = true;
+    this.certificateLabel = <Label>this.page.getViewById('certificateLabel');
+    this.logoLabel = <Label>this.page.getViewById('logoLabel');
+    this.businessNameTextField = <TextField>(
+      this.page.getViewById('businessNameTextField')
     );
-    this._rucTextField = <TextField>this._page.getViewById('rucTextField');
-    this._solUserTextField = <TextField>(
-      this._page.getViewById('solUserTextField')
+    this.rucTextField = <TextField>this.page.getViewById('rucTextField');
+    this.solUserTextField = <TextField>(
+      this.page.getViewById('solUserTextField')
     );
-    this._solPasswordTextField = <TextField>(
-      this._page.getViewById('solPasswordTextField')
+    this.solPasswordTextField = <TextField>(
+      this.page.getViewById('solPasswordTextField')
     );
-    this._addressTextField = <TextField>(
-      this._page.getViewById('addressTextField')
+    this.addressTextField = <TextField>(
+      this.page.getViewById('addressTextField')
     );
   }
 
   onCertButtonTapped() {
-    this._presenter.selectFile('pem');
+    this.presenter.selectFile('pem');
   }
 
   onLogoButtonTapped() {
-    this._presenter.selectImage();
+    this.presenter.selectImage();
   }
 
   setCertificateLabel(value: string) {
-    this._certificatePath = value;
-    this._certificateLabel.text = value.replace(/^.*[\\\/]/, '');
+    this.certificatePath = value;
+    this.certificateLabel.text = value.replace(/^.*[\\\/]/, '');
   }
 
   setLogoLabel(value: string) {
-    this._logoPath = value;
-    this._logoLabel.text = value.replace(/^.*[\\\/]/, '');
+    this.logoPath = value;
+    this.logoLabel.text = value.replace(/^.*[\\\/]/, '');
   }
 
   onBackTapped() {
-    this._router.navigate(['company']);
+    this.router.navigate(['company']);
   }
 
   onSaveButtonTapped() {
     const data = {
       plan: 'free',
       environment: 'beta',
-      sol_user: this._solUserTextField.text,
-      sol_pass: this._solPasswordTextField.text,
-      ruc: this._rucTextField.text,
-      razon_social: this._businessNameTextField.text,
-      direccion: this._addressTextField.text,
-      certificado: this._certificatePath,
-      logo: this._logoPath,
+      sol_user: this.solUserTextField.text,
+      sol_pass: this.solPasswordTextField.text,
+      ruc: this.rucTextField.text,
+      razon_social: this.businessNameTextField.text,
+      direccion: this.addressTextField.text,
+      certificado: this.certificatePath,
+      logo: this.logoPath,
     };
-    this._presenter.saveCompany(data);
+    this.presenter.saveCompany(data);
   }
 
   onSuccessSave(result) {
-    console.log({ result });
+    this.modalService
+      .showModal(SimpleModalComponent, {
+        viewContainerRef: this.vcRef,
+        fullscreen: false,
+        context: {
+          image: 'success',
+          title: 'Guardado satisfactorio',
+          description: 'La empresa se guardó correctamente',
+          buttonText: 'Volver',
+        },
+      })
+      .then(() => {
+        this.router.navigate(['company']);
+      });
+  }
+
+  onErrorSave(result) {
+    this.modalService
+      .showModal(SimpleModalComponent, {
+        viewContainerRef: this.vcRef,
+        fullscreen: false,
+        context: {
+          image: 'error',
+          title: 'Error al guardar',
+          description: 'Verifique los datos',
+          buttonText: 'Cerrar',
+        },
+      })
+      .then(() => {});
   }
 }

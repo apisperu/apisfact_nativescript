@@ -3,30 +3,28 @@ import { File } from 'tns-core-modules/file-system';
 
 import { NewComponent } from './new.component';
 import { CompanyService } from '~/app/core/services/company.service';
-import { RouterExtensions } from 'nativescript-angular/router';
 import { FilePickerService } from '~/app/core/services/file-picker.service';
 
 declare var android;
 
 @Injectable()
 export class NewPresenter {
-  private _view: NewComponent;
+  private view: NewComponent;
 
   constructor(
-    private _companyService: CompanyService,
-    private _router: RouterExtensions,
-    private _filePickerService: FilePickerService
+    private companyService: CompanyService,
+    private filePickerService: FilePickerService
   ) {}
 
   setView(view: NewComponent) {
-    this._view = view;
+    this.view = view;
   }
 
   selectFile(extension: string) {
-    this._filePickerService.selectFile(
+    this.filePickerService.selectFile(
       extension,
       (result) => {
-        this._view.setCertificateLabel(result[0].file);
+        this.view.setCertificateLabel(result[0].file);
       },
       () => {},
       () => {}
@@ -34,9 +32,9 @@ export class NewPresenter {
   }
 
   selectImage() {
-    this._filePickerService.selectImage(
+    this.filePickerService.selectImage(
       (result) => {
-        this._view.setLogoLabel(result[0].file);
+        this.view.setLogoLabel(result[0].file);
       },
       () => {},
       () => {}
@@ -44,16 +42,20 @@ export class NewPresenter {
   }
 
   saveCompany(data: any) {
-    this._companyService
+    this.companyService
       .save({
         ...data,
         certificado: this.toBase64(data.certificado),
         logo: this.toBase64(data.logo),
       })
-      .subscribe((response) => {
-        this._view.onSuccessSave(response);
-        this._router.navigate(['company']);
-      });
+      .subscribe(
+        (response) => {
+          this.view.onSuccessSave(response);
+        },
+        (err) => {
+          this.view.onErrorSave(err);
+        }
+      );
   }
 
   private toBase64(path) {

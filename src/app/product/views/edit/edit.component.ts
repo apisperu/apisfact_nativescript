@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { EditPresenter } from './edit.presenter';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IProduct } from '../../models/product.model';
+import { SimpleModalComponent } from '~/app/shared/simple-modal/simple-modal.component';
+import { ModalDialogService } from 'nativescript-angular/modal-dialog';
 
 @Component({
   selector: 'app-product-edit',
@@ -18,22 +20,24 @@ export class EditComponent implements OnInit {
   productForm: FormGroup;
 
   constructor(
-    private _page: Page,
-    private _presenter: EditPresenter,
-    private _router: RouterExtensions,
-    private _fb: FormBuilder,
-    private _activatedRoute: ActivatedRoute
+    private page: Page,
+    private presenter: EditPresenter,
+    private router: RouterExtensions,
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private modalService: ModalDialogService,
+    private vcRef: ViewContainerRef
   ) {
     this.setForm();
-    this._presenter.setView(this);
-    this._activatedRoute.params.subscribe((data) => {
+    this.presenter.setView(this);
+    this.activatedRoute.params.subscribe((data) => {
       this.codProducto = data.id;
-      this._presenter.getProduct(this.codProducto);
+      this.presenter.getProduct(this.codProducto);
     });
   }
 
   ngOnInit(): void {
-    this._page.actionBarHidden = true;
+    this.page.actionBarHidden = true;
   }
 
   setData(data: IProduct) {
@@ -44,7 +48,7 @@ export class EditComponent implements OnInit {
   }
 
   setForm() {
-    this.productForm = this._fb.group({
+    this.productForm = this.fb.group({
       descripcion: [null, []],
       codProducto: [
         {
@@ -59,19 +63,49 @@ export class EditComponent implements OnInit {
   }
 
   onBackTapped() {
-    this._router.navigate(['product']);
+    this.router.navigate(['product']);
   }
 
   onSaveButtonTapped() {
     const data: IProduct = this.productForm.getRawValue();
-    this._presenter.updateProduct(data);
+    this.presenter.updateProduct(data);
   }
 
   onDeleteButtonTapped() {
-    this._presenter.deleteProduct(this.codProducto);
+    this.presenter.deleteProduct(this.codProducto);
   }
 
   onSuccessSave(result) {
-    console.log({ result });
+    this.modalService
+      .showModal(SimpleModalComponent, {
+        viewContainerRef: this.vcRef,
+        fullscreen: false,
+        context: {
+          image: 'success',
+          title: 'Guardado exitoso',
+          description: 'El producto se guardó correctamente',
+          buttonText: 'Volver',
+        },
+      })
+      .then((data: any) => {
+        this.router.navigate(['product']);
+      });
+  }
+
+  onSuccessDelete(result) {
+    this.modalService
+      .showModal(SimpleModalComponent, {
+        viewContainerRef: this.vcRef,
+        fullscreen: false,
+        context: {
+          image: 'success',
+          title: 'Eliminación exitosa',
+          description: 'El producto se eliminó correctamente',
+          buttonText: 'Volver',
+        },
+      })
+      .then((data: any) => {
+        this.router.navigate(['product']);
+      });
   }
 }
