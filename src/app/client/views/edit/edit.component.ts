@@ -39,7 +39,7 @@ export class EditComponent implements OnInit {
     this.presenter.getPersonalDocumentTypeList();
     this.activatedRoute.params.subscribe((data) => {
       this.docNumber = data.id;
-      this.presenter.getClient(this.docNumber);
+      this.presenter.getClient(+this.docNumber);
     });
   }
 

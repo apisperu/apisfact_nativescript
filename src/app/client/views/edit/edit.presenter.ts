@@ -3,40 +3,54 @@ import { Injectable } from '@angular/core';
 import { EditComponent } from './edit.component';
 import { ClientService, IItem } from '~/app/core/services/client.service';
 import { IClient } from '../../models/client.model';
+import { CompanyService } from '~/app/core/services/company.service';
+import { ICompany } from '~/app/company/models/company.model';
 
 @Injectable()
 export class EditPresenter {
-  private _view: EditComponent;
+  private view: EditComponent;
+  private activeCompany = {} as ICompany;
 
-  constructor(private _clientService: ClientService) {}
+  constructor(
+    private clientService: ClientService,
+    private companyService: CompanyService
+  ) {
+    this.companyService.getActiveCompany().subscribe((data) => {
+      this.activeCompany = data;
+    });
+  }
 
   setView(view: EditComponent) {
-    this._view = view;
+    this.view = view;
   }
 
   updateClient(data: IClient) {
-    this._clientService.update(data).subscribe(() => {
-      this._view.onSuccessSave();
+    this.clientService.update(this.activeCompany.ruc, data).subscribe(() => {
+      this.view.onSuccessSave();
     });
   }
 
   deleteClient(docNumber) {
-    this._clientService.delete(docNumber).subscribe(() => {
-      this._view.onSuccessDelete();
-    });
+    this.clientService
+      .delete(this.activeCompany.ruc, docNumber)
+      .subscribe(() => {
+        this.view.onSuccessDelete();
+      });
   }
 
-  getClient(docNumber: string) {
-    this._clientService.getByDocNumner(docNumber).subscribe((data) => {
-      this._view.setData(data);
-    });
+  getClient(docNumber: number) {
+    this.clientService
+      .getByDocNumner(this.activeCompany.ruc, docNumber)
+      .subscribe((data) => {
+        this.view.setData(data);
+      });
   }
 
   getPersonalDocumentTypeList() {
-    this._clientService
+    this.clientService
       .getPersonalDocumentTypeList()
       .subscribe((data: IItem[]) => {
-        this._view.setDocumentTypeList(data);
+        this.view.setDocumentTypeList(data);
       });
   }
 }

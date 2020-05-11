@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { ListPresenter } from './list.presenter';
-import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
-import { ICompany } from '~/app/company/models/company.model';
 
 @Component({
   selector: 'app-billing-list',
@@ -13,27 +11,19 @@ import { ICompany } from '~/app/company/models/company.model';
   providers: [ListPresenter],
 })
 export class ListComponent implements OnInit {
-  company: ICompany = null;
   constructor(
-    private _page: Page,
-    private _presenter: ListPresenter,
-    private _activatedRoute: ActivatedRoute,
-    private _router: RouterExtensions
+    private page: Page,
+    private presenter: ListPresenter,
+    private router: RouterExtensions
   ) {
-    this._presenter.setView(this);
-    this._activatedRoute.params.subscribe((data) => {
-      this._presenter.getActiveCompany();
-    });
+    this.presenter.setView(this);
   }
 
   ngOnInit(): void {
-    this._page.actionBarHidden = true;
+    this.page.actionBarHidden = true;
   }
 
-  setActiveCompany(data: ICompany) {
-    this.company = data;
-  }
   onBackTapped() {
-    this._router.navigate(['company']);
+    this.router.navigate(['company']);
   }
 }

@@ -1,28 +1,13 @@
 import { Injectable } from '@angular/core';
-import { RouterExtensions } from 'nativescript-angular/router';
-
-import { AppStateService } from '~/app/core/services/app-state.service';
 import { ListComponent } from './list.component';
-import { CompanyService } from '~/app/core/services/company.service';
-import { ICompany } from '~/app/company/models/company.model';
 
 @Injectable()
 export class ListPresenter {
-  private _view: ListComponent;
+  private view: ListComponent;
 
-  constructor(
-    private _router: RouterExtensions,
-    private _appStateService: AppStateService,
-    private _companyService: CompanyService
-  ) {}
+  constructor() {}
 
   setView(view: ListComponent) {
-    this._view = view;
-  }
-
-  getActiveCompany() {
-    this._companyService.getActiveCompany().subscribe((data: ICompany) => {
-      this._view.setActiveCompany(data);
-    });
+    this.view = view;
   }
 }

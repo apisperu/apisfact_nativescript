@@ -7,15 +7,9 @@
       <TabStrip>
         <TabStripItem>
           <Label text="Home"></Label>
-          <!-- <Image src="font://&#xf015;" class="fas"></Image> -->
         </TabStripItem>
-        <TabStripItem class="special">
-          <Label text="Account"></Label>
-          <!-- <Image src="font://&#xf007;" class="fas t-36"></Image> -->
-        </TabStripItem>
-        <TabStripItem class="special">
-          <Label text="Search"></Label>
-          <!-- <Image src="font://&#xf00e;" class="fas t-36"></Image> -->
+        <TabStripItem>
+          <Label text="Mi cuenta"></Label>
         </TabStripItem>
       </TabStrip>
 
@@ -50,32 +44,11 @@
               path="company"
             ></app-custom-card>
           </StackLayout>
-          <StackLayout
-            orientation="horizontal"
-            class="page-content"
-            horizontalAlignment="center"
-          >
-            <app-custom-card
-              image="client"
-              title="Clientes"
-              path="client"
-            ></app-custom-card>
-            <app-custom-card
-              image="product"
-              title="Productos"
-              path="product"
-            ></app-custom-card>
-          </StackLayout>
         </StackLayout>
       </TabContentItem>
       <TabContentItem>
         <GridLayout>
-          <Label text="Account Page" class="h2 text-center"></Label>
-        </GridLayout>
-      </TabContentItem>
-      <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
+          <Label text="Mi cuenta" textWrap="true" class="title"></Label>
         </GridLayout>
       </TabContentItem>
     </BottomNavigation>

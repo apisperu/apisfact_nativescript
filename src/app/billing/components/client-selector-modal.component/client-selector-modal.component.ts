@@ -3,6 +3,7 @@ import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ClientService } from '~/app/core/services/client.service';
 import { IClient } from '~/app/client/models/client.model';
+import { CompanyService } from '~/app/core/services/company.service';
 
 @Component({
   moduleId: module.id,
@@ -12,19 +13,22 @@ import { IClient } from '~/app/client/models/client.model';
 export class ClientSelectorModalComponent {
   clientList: IClient[];
   constructor(
-    private _params: ModalDialogParams,
+    private params: ModalDialogParams,
     private router: RouterExtensions,
-    private _clientService: ClientService
+    private clientService: ClientService,
+    private companyService: CompanyService
   ) {
-    this.getClients();
+    this.companyService.getActiveCompany().subscribe((data) => {
+      this.getClients(data.ruc);
+    });
   }
 
   onSelectOptionTapped(client: IClient): void {
-    this._params.closeCallback(client);
+    this.params.closeCallback(client);
   }
 
-  getClients() {
-    this._clientService.getList().subscribe((data) => {
+  getClients(companyRuc: string) {
+    this.clientService.getList(companyRuc).subscribe((data) => {
       this.clientList = data;
     });
   }
@@ -33,6 +37,6 @@ export class ClientSelectorModalComponent {
     this.router.back();
   }
   onClose(): void {
-    this._params.closeCallback('return value');
+    this.params.closeCallback('return value');
   }
 }

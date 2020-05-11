@@ -1,0 +1,43 @@
+<GridLayout rows="*" class="page">
+  <StackLayout class="container">
+    <Label
+      text="<- Volver"
+      textWrap="true"
+      class="back"
+      (tap)="onBackTapped()"
+    ></Label>
+    <Label text="Menú" textWrap="true" class="title"></Label>
+    <Label
+      [text]="company ? company.razon_social : ''"
+      textWrap="true"
+      class="company"
+    ></Label>
+    <StackLayout
+      orientation="horizontal"
+      class="page-content"
+      horizontalAlignment="center"
+    >
+      <app-custom-card
+        image="bill"
+        title="Emisión de Boletas y Facturas"
+        path="billing/ticket"
+      ></app-custom-card>
+    </StackLayout>
+    <StackLayout
+      orientation="horizontal"
+      class="page-content"
+      horizontalAlignment="center"
+    >
+      <app-custom-card
+        image="client"
+        title="Clientes"
+        path="client"
+      ></app-custom-card>
+      <app-custom-card
+        image="product"
+        title="Productos"
+        path="product"
+      ></app-custom-card>
+    </StackLayout>
+  </StackLayout>
+</GridLayout>

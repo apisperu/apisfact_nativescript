@@ -11,6 +11,10 @@
   text-align: center;
   margin-top: 32px;
 }
+.company {
+  color: white;
+  font-size: 20px;
+}
 .back {
   font-size: 16px;
   color: #71a202;

@@ -7,25 +7,26 @@ import {
   setString,
 } from 'tns-core-modules/application-settings/application-settings';
 import { IProduct } from '~/app/product/models/product.model';
+import { ICompanyDataState } from '../models/company-data-state.model';
 
 @Injectable()
 export class ProductService {
   constructor(private _http: HttpClient) {}
 
-  getList(): Observable<any> {
-    const productList = this.getProductList();
+  getList(companyRuc: string): Observable<IProduct[]> {
+    const productList = this.getProductList(companyRuc);
     return of(productList);
   }
 
-  save(data): Observable<any> {
-    const productList = this.getProductList();
+  save(companyRuc: string, data: IProduct): Observable<any> {
+    const productList = this.getProductList(companyRuc);
     productList.push(data);
-    this.saveProductList(productList);
+    this.saveProductList(companyRuc, productList);
     return of({});
   }
 
-  update(data): Observable<any> {
-    const productList = this.getProductList();
+  update(companyRuc: string, data: IProduct): Observable<any> {
+    const productList = this.getProductList(companyRuc);
     const newProductList = productList.map((item) => {
       if (item.codProducto === data.codProducto) {
         item = data;
@@ -34,30 +35,52 @@ export class ProductService {
         ...item,
       };
     });
-    this.saveProductList(newProductList);
+    this.saveProductList(companyRuc, newProductList);
     return of({});
   }
 
-  delete(codProducto): Observable<any> {
-    const productList = this.getProductList();
+  delete(companyRuc: string, codProducto: string): Observable<any> {
+    const productList = this.getProductList(companyRuc);
     const newProductList = productList.filter((item) => {
       return item.codProducto !== codProducto;
     });
-    this.saveProductList(newProductList);
+    this.saveProductList(companyRuc, newProductList);
     return of({});
   }
 
-  getByCode(codProducto: string): Observable<any> {
-    const productList: IProduct[] = this.getProductList();
+  getByCode(companyRuc: string, codProducto: string): Observable<any> {
+    const productList: IProduct[] = this.getProductList(companyRuc);
     return of(productList.find((item) => item.codProducto === codProducto));
   }
 
-  private getProductList(): any[] {
-    const productList = getString('productList');
-    return productList ? JSON.parse(productList) : [];
+  private getProductList(companyRuc: string): any[] {
+    const companyDataStateList: ICompanyDataState[] = getString(
+      'companyDataStateList'
+    )
+      ? JSON.parse(getString('companyDataStateList'))
+      : [];
+
+    const index = companyDataStateList.findIndex(
+      (item) => item.company.ruc === companyRuc
+    );
+
+    return index !== -1 ? companyDataStateList[index].productList : [];
   }
 
-  private saveProductList(productList) {
-    setString('productList', JSON.stringify(productList));
+  private saveProductList(companyRuc: string, productList: IProduct[]) {
+    const companyDataStateList: ICompanyDataState[] = getString(
+      'companyDataStateList'
+    )
+      ? JSON.parse(getString('companyDataStateList'))
+      : [];
+
+    const index = companyDataStateList.findIndex(
+      (item) => item.company.ruc === companyRuc
+    );
+
+    if (index !== -1) {
+      companyDataStateList[index].productList = productList;
+      setString('companyDataStateList', JSON.stringify(companyDataStateList));
+    }
   }
 }

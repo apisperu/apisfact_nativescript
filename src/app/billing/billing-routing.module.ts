@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'ticket',
     component: TicketComponent,
   },
-  { path: ':id', component: ListComponent },
+  { path: '', component: ListComponent },
 ];
 
 @NgModule({

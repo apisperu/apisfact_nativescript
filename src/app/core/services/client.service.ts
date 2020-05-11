@@ -7,6 +7,7 @@ import {
   setString,
 } from 'tns-core-modules/application-settings/application-settings';
 import { IClient } from '~/app/client/models/client.model';
+import { ICompanyDataState } from '../models/company-data-state.model';
 
 export interface IItem {
   code: string;
@@ -17,25 +18,25 @@ export interface IItem {
 export class ClientService {
   constructor(private _http: HttpClient) {}
 
-  getList(): Observable<IClient[]> {
-    const clientList = this.getClientList();
+  getList(companyRuc: string): Observable<IClient[]> {
+    const clientList = this.getClientList(companyRuc);
     return of(clientList);
   }
 
-  getByDocNumner(numDoc): Observable<IClient> {
-    const clientList = this.getClientList();
+  getByDocNumner(companyRuc: string, numDoc: number): Observable<IClient> {
+    const clientList = this.getClientList(companyRuc);
     return of(clientList.find((item) => item.numDoc === numDoc));
   }
 
-  save(data: IClient): Observable<any> {
-    const clientList = this.getClientList();
+  save(companyRuc: string, data: IClient): Observable<any> {
+    const clientList = this.getClientList(companyRuc);
     clientList.push(data);
-    this.saveClientList(clientList);
+    this.saveClientList(companyRuc, clientList);
     return of({});
   }
 
-  update(data): Observable<any> {
-    const clientList = this.getClientList();
+  update(companyRuc: string, data: IClient): Observable<any> {
+    const clientList = this.getClientList(companyRuc);
     const newClientList = clientList.map((item) => {
       if (item.numDoc === data.numDoc) {
         item = data;
@@ -44,16 +45,16 @@ export class ClientService {
         ...item,
       };
     });
-    this.saveClientList(newClientList);
+    this.saveClientList(companyRuc, newClientList);
     return of({});
   }
 
-  delete(numDoc): Observable<any> {
-    const clientList = this.getClientList();
+  delete(companyRuc: string, numDoc: number): Observable<any> {
+    const clientList = this.getClientList(companyRuc);
     const newClientList = clientList.filter((item) => {
       return item.numDoc !== numDoc;
     });
-    this.saveClientList(newClientList);
+    this.saveClientList(companyRuc, newClientList);
     return of({});
   }
 
@@ -71,12 +72,34 @@ export class ClientService {
     return of(list);
   }
 
-  private getClientList(): IClient[] {
-    const clientList = getString('clientList');
-    return clientList ? JSON.parse(clientList) : [];
+  private getClientList(companyRuc: string): IClient[] {
+    const companyDataStateList: ICompanyDataState[] = getString(
+      'companyDataStateList'
+    )
+      ? JSON.parse(getString('companyDataStateList'))
+      : [];
+
+    const index = companyDataStateList.findIndex(
+      (item) => item.company.ruc === companyRuc
+    );
+
+    return index !== -1 ? companyDataStateList[index].clientList : [];
   }
 
-  private saveClientList(clientList) {
-    setString('clientList', JSON.stringify(clientList));
+  private saveClientList(companyRuc: string, clientList: IClient[]) {
+    const companyDataStateList: ICompanyDataState[] = getString(
+      'companyDataStateList'
+    )
+      ? JSON.parse(getString('companyDataStateList'))
+      : [];
+
+    const index = companyDataStateList.findIndex(
+      (item) => item.company.ruc === companyRuc
+    );
+
+    if (index !== -1) {
+      companyDataStateList[index].clientList = clientList;
+      setString('companyDataStateList', JSON.stringify(companyDataStateList));
+    }
   }
 }

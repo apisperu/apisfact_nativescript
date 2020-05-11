@@ -3,20 +3,30 @@ import { Injectable } from '@angular/core';
 import { NewComponent } from './new.component';
 import { ClientService } from '~/app/core/services/client.service';
 import { IClient } from '../../models/client.model';
+import { ICompany } from '~/app/company/models/company.model';
+import { CompanyService } from '~/app/core/services/company.service';
 
 @Injectable()
 export class NewPresenter {
-  private _view: NewComponent;
+  private view: NewComponent;
+  private activeCompany = {} as ICompany;
 
-  constructor(private _clientService: ClientService) {}
+  constructor(
+    private clientService: ClientService,
+    private companyService: CompanyService
+  ) {
+    this.companyService.getActiveCompany().subscribe((data) => {
+      this.activeCompany = data;
+    });
+  }
 
   setView(view: NewComponent) {
-    this._view = view;
+    this.view = view;
   }
 
   saveClient(data: IClient) {
-    this._clientService.save(data).subscribe(() => {
-      this._view.onSuccessSave();
+    this.clientService.save(this.activeCompany.ruc, data).subscribe(() => {
+      this.view.onSuccessSave();
     });
   }
 }

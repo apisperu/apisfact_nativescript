@@ -10,6 +10,7 @@ export class AppStateService {
   constructor() {
     const accessToken = getString('accessToken');
     const username = getString('username');
+    const companyDataStateList = getString('companyDataStateList');
 
     if (accessToken) {
       this.set('accessToken', accessToken);
@@ -17,6 +18,9 @@ export class AppStateService {
 
     if (username) {
       this.set('username', username);
+    }
+    if (companyDataStateList) {
+      this.set('companyDataStateList', JSON.parse(companyDataStateList));
     }
   }
 

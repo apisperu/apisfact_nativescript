@@ -8,6 +8,7 @@ import {
   setString,
   getString,
 } from 'tns-core-modules/application-settings/application-settings';
+import { ICompanyDataState } from '../models/company-data-state.model';
 
 @Injectable()
 export class CompanyService {
@@ -21,13 +22,41 @@ export class CompanyService {
     return this._http.post(Endpoint.company(), data);
   }
 
-  storeActiveCompany(data: ICompany): Observable<any> {
-    setString('activeCompany', JSON.stringify(data));
-    return of({});
+  getActiveCompany(): Observable<ICompany> {
+    const companyDataStateList: ICompanyDataState[] = getString(
+      'companyDataStateList'
+    )
+      ? JSON.parse(getString('companyDataStateList'))
+      : [];
+
+    const index = companyDataStateList.findIndex((item) => item.active);
+
+    return index !== -1 ? of(companyDataStateList[index].company) : of(null);
   }
 
-  getActiveCompany(): Observable<ICompany> {
-    const company = getString('activeCompany');
-    return company ? of(JSON.parse(company)) : of({});
+  storeActiveCompany(data: ICompany) {
+    const companyDataStateList: ICompanyDataState[] = getString(
+      'companyDataStateList'
+    )
+      ? JSON.parse(getString('companyDataStateList'))
+      : [];
+    const index = companyDataStateList.findIndex(
+      (item) => item.company.ruc === data.ruc
+    );
+    companyDataStateList.forEach((item) => (item.active = false));
+    if (index !== -1) {
+      companyDataStateList[index].active = true;
+      companyDataStateList[index].company = data;
+    } else {
+      const newItem: ICompanyDataState = {
+        active: true,
+        company: data,
+        billingList: [],
+        clientList: [],
+        productList: [],
+      };
+      companyDataStateList.push(newItem);
+    }
+    setString('companyDataStateList', JSON.stringify(companyDataStateList));
   }
 }

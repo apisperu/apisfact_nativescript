@@ -7,6 +7,7 @@ import {
   IProductExtended,
   ProductExtended,
 } from '~/app/product/models/product-extended.model';
+import { CompanyService } from '~/app/core/services/company.service';
 
 @Component({
   moduleId: module.id,
@@ -16,22 +17,25 @@ import {
 export class ProductSelectorModalComponent {
   productList: IProductExtended[];
   constructor(
-    private _params: ModalDialogParams,
+    private params: ModalDialogParams,
     private router: RouterExtensions,
-    private _productService: ProductService
+    private productService: ProductService,
+    private companyService: CompanyService
   ) {
-    this.getProducts();
+    this.companyService.getActiveCompany().subscribe((data) => {
+      this.getProducts(data.ruc);
+    });
   }
 
   onAddButtonTapped(): void {
     const finalProductList = this.productList.filter((item) => {
       return item.cantidad > 0;
     });
-    this._params.closeCallback(this.parseResponse(finalProductList));
+    this.params.closeCallback(this.parseResponse(finalProductList));
   }
 
-  getProducts() {
-    this._productService.getList().subscribe((data: IProduct[]) => {
+  getProducts(companyRuc: string) {
+    this.productService.getList(companyRuc).subscribe((data: IProduct[]) => {
       this.productList = data.map((item) => {
         return new ProductExtended({ ...item, cantidad: 0, active: false });
       });
@@ -55,6 +59,6 @@ export class ProductSelectorModalComponent {
     this.router.back();
   }
   onClose(): void {
-    this._params.closeCallback('return value');
+    this.params.closeCallback('return value');
   }
 }

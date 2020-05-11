@@ -21,8 +21,7 @@ export class CustomListComponent implements OnInit {
   ngOnInit(): void {}
 
   onItemTapped(item: ICompany) {
-    this._companyService.storeActiveCompany(item).subscribe(() => {
-      this._router.navigate([`billing/${item.ruc}`]);
-    });
+    this._companyService.storeActiveCompany(item);
+    this._router.navigate([`company/menu/:${item.ruc}`]);
   }
 }
