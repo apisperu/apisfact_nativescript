@@ -1,0 +1,43 @@
+<StackLayout
+  *ngFor="let item of list"
+  class="custom-list"
+  orientation="horizontal"
+  (tap)="onItemTapped(item.correlativo)"
+>
+  <Image
+    class="m-x-auto list-image"
+    src="res://tick"
+    stretch="aspectFit"
+  ></Image>
+  <StackLayout>
+    <Label
+      class="list-title"
+      [text]="item.serie + '-' + item.correlativo"
+    ></Label>
+    <Label class="list-description">
+      <FormattedString>
+        <Span class="description-key" text="Fecha: "></Span>
+        <Span class="description-value" [text]="item.fechaEmision"></Span>
+      </FormattedString>
+    </Label>
+    <Label class="list-description">
+      <FormattedString>
+        <Span class="description-key" text="Total: "></Span>
+        <Span class="description-value" [text]="item.mtoImpVenta"></Span>
+      </FormattedString>
+    </Label>
+    <Label class="list-description">
+      <FormattedString>
+        <Span class="description-key" text="Rpta Sunat: "></Span>
+        <Span
+          class="description-value"
+          [text]="item.sunatResponse.cdrResponse.description"
+        ></Span>
+      </FormattedString>
+    </Label>
+    <StackLayout orientation="horizontal">
+      <Button width="50%" text="PDF" (tap)="onSelectPdf(item)"></Button>
+      <Button width="50%" text="XML" (tap)="onSelectXml(item)"></Button>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>

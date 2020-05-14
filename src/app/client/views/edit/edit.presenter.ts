@@ -38,7 +38,7 @@ export class EditPresenter {
       });
   }
 
-  getClient(docNumber: number) {
+  getClient(docNumber: string) {
     this.clientService
       .getByDocNumner(this.activeCompany.ruc, docNumber)
       .subscribe((data) => {

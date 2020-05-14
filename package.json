@@ -2,10 +2,10 @@
   "nativescript": {
     "id": "org.nativescript.apisfactmobile",
     "tns-android": {
-      "version": "6.0.0"
+      "version": "6.4.0"
     },
     "tns-ios": {
-      "version": "6.0.1"
+      "version": "6.4.0"
     }
   },
   "description": "NativeScript Application",
@@ -23,17 +23,18 @@
     "@angular/router": "8.0.0",
     "nativescript-angular": "8.0.2",
     "nativescript-mediafilepicker": "^3.0.1",
+    "nativescript-permissions": "^1.3.9",
     "nativescript-theme-core": "~1.0.4",
     "reflect-metadata": "~0.1.12",
     "rxjs": "~6.3.0",
-    "tns-core-modules": "6.0.1",
+    "tns-core-modules": "~6.4.0",
     "zone.js": "0.9.1"
   },
   "devDependencies": {
     "@angular/compiler-cli": "8.0.0",
     "@nativescript/schematics": "~0.5.0",
     "@ngtools/webpack": "8.0.0",
-    "nativescript-dev-webpack": "1.0.1",
+    "nativescript-dev-webpack": "~1.5.0",
     "node-sass": "4.12.0",
     "typescript": "3.4.5"
   },

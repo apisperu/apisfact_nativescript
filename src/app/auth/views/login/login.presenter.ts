@@ -4,6 +4,7 @@ import { LoginComponent } from './login.component';
 import { LoginService } from '~/app/core/services/login.service';
 import { AppStateService } from '~/app/core/services/app-state.service';
 import { setString } from 'tns-core-modules/application-settings/application-settings';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class LoginPresenter {
@@ -11,7 +12,8 @@ export class LoginPresenter {
 
   constructor(
     private loginService: LoginService,
-    private appStateService: AppStateService
+    private appStateService: AppStateService,
+    private datePipe: DatePipe
   ) {}
 
   setView(view: LoginComponent) {
@@ -35,5 +37,8 @@ export class LoginPresenter {
     setString('username', username);
     this.appStateService.set('accessToken', token);
     setString('accessToken', token);
+    const date = this.datePipe.transform(new Date(), 'dd/MM/yyyy hh:mm a');
+    this.appStateService.set('loginDate', date);
+    setString('loginDate', date);
   }
 }

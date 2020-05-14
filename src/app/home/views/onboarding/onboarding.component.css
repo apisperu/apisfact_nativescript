@@ -1,3 +1,7 @@
+.container {
+  background-color: #21252d;
+}
+
 .title {
   font-size: 32px;
   color: white;
@@ -19,4 +23,18 @@
 .page-content {
   text-align: center;
   margin-top: 32px;
+}
+
+.label {
+  font-size: 18px;
+  color: #888888;
+  line-height: 20px;
+  text-align: left;
+}
+
+.description {
+  font-size: 16px;
+  color: #aaaaaa;
+  line-height: 20px;
+  text-align: left;
 }

@@ -34,3 +34,4 @@ typings/
 
 # Other
 .migration_backup
+.update_backup

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { getString, clear } from 'tns-core-modules/application-settings';
+import {
+  getString,
+  clear,
+  remove,
+} from 'tns-core-modules/application-settings';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +14,7 @@ export class AppStateService {
   constructor() {
     const accessToken = getString('accessToken');
     const username = getString('username');
+    const loginDate = getString('loginDate');
     const companyDataStateList = getString('companyDataStateList');
 
     if (accessToken) {
@@ -18,6 +23,9 @@ export class AppStateService {
 
     if (username) {
       this.set('username', username);
+    }
+    if (loginDate) {
+      this.set('loginDate', loginDate);
     }
     if (companyDataStateList) {
       this.set('companyDataStateList', JSON.parse(companyDataStateList));
@@ -42,7 +50,8 @@ export class AppStateService {
 
   reset() {
     this._state = {};
-    clear();
+    remove('accessToken');
+    remove('username');
   }
 
   private copy(state: any) {

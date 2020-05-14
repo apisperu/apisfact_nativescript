@@ -19,7 +19,7 @@ import { SimpleModalComponent } from '~/app/shared/simple-modal/simple-modal.com
 })
 export class NewComponent implements OnInit {
   clientForm: FormGroup;
-  documentType = null;
+  documentType = '1';
 
   constructor(
     private page: Page,
@@ -55,7 +55,7 @@ export class NewComponent implements OnInit {
   }
 
   onBackTapped() {
-    this.router.navigate(['client']);
+    this.router.back();
   }
 
   onSaveButtonTapped() {
@@ -74,7 +74,7 @@ export class NewComponent implements OnInit {
       description: 'El cliente se guardó correctamente',
       buttonText: 'Volver',
     }).then((data: any) => {
-      this.router.navigate(['client']);
+      this.router.back();
     });
   }
 

@@ -1,6 +1,3 @@
-<ActionBar class="action-bar">
-  <Label class="action-bar-title" text="Home"></Label>
-</ActionBar>
 <GridLayout rows="*" class="page">
   <GridLayout row="0" rows="*">
     <BottomNavigation selectedIndex="0">
@@ -47,9 +44,41 @@
         </StackLayout>
       </TabContentItem>
       <TabContentItem>
-        <GridLayout>
+        <StackLayout class="container">
           <Label text="Mi cuenta" textWrap="true" class="title"></Label>
-        </GridLayout>
+          <StackLayout orientation="horizontal" class="page-content">
+            <Label
+              width="50%"
+              verticalAlignment="bottom"
+              text="Usuario: "
+              textWrap="true"
+              class="label"
+            ></Label>
+            <Label
+              width="50%"
+              verticalAlignment="bottom"
+              [text]="username"
+              textWrap="true"
+              class="description"
+            ></Label>
+          </StackLayout>
+          <StackLayout orientation="horizontal" class="page-content">
+            <Label
+              width="50%"
+              verticalAlignment="bottom"
+              text="Inicio de sesión: "
+              textWrap="true"
+              class="label"
+            ></Label>
+            <Label
+              width="50%"
+              verticalAlignment="bottom"
+              [text]="loginDate"
+              textWrap="true"
+              class="description"
+            ></Label>
+          </StackLayout>
+        </StackLayout>
       </TabContentItem>
     </BottomNavigation>
   </GridLayout>

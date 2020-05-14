@@ -39,7 +39,7 @@ export class EditComponent implements OnInit {
     this.presenter.getPersonalDocumentTypeList();
     this.activatedRoute.params.subscribe((data) => {
       this.docNumber = data.id;
-      this.presenter.getClient(+this.docNumber);
+      this.presenter.getClient(this.docNumber);
     });
   }
 
@@ -79,7 +79,7 @@ export class EditComponent implements OnInit {
   }
 
   onBackTapped() {
-    this.router.navigate(['client']);
+    this.router.back();
   }
 
   onSaveButtonTapped() {
@@ -102,7 +102,7 @@ export class EditComponent implements OnInit {
       description: 'El cliente se actualizó correctamente',
       buttonText: 'Volver',
     }).then(() => {
-      this.router.navigate(['client']);
+      this.router.back();
     });
   }
 
@@ -113,7 +113,7 @@ export class EditComponent implements OnInit {
       description: 'El cliente se eliminó correctamente',
       buttonText: 'Volver',
     }).then(() => {
-      this.router.navigate(['client']);
+      this.router.back();
     });
   }
 

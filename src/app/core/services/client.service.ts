@@ -23,7 +23,7 @@ export class ClientService {
     return of(clientList);
   }
 
-  getByDocNumner(companyRuc: string, numDoc: number): Observable<IClient> {
+  getByDocNumner(companyRuc: string, numDoc: string): Observable<IClient> {
     const clientList = this.getClientList(companyRuc);
     return of(clientList.find((item) => item.numDoc === numDoc));
   }
@@ -49,7 +49,7 @@ export class ClientService {
     return of({});
   }
 
-  delete(companyRuc: string, numDoc: number): Observable<any> {
+  delete(companyRuc: string, numDoc: string): Observable<any> {
     const clientList = this.getClientList(companyRuc);
     const newClientList = clientList.filter((item) => {
       return item.numDoc !== numDoc;

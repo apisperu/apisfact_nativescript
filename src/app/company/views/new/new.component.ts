@@ -75,7 +75,7 @@ export class NewComponent implements OnInit {
   }
 
   onBackTapped() {
-    this.router.navigate(['company']);
+    this.router.back();
   }
 
   onSaveButtonTapped() {

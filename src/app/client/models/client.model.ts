@@ -1,6 +1,6 @@
 export interface IClient {
   tipoDoc: string;
-  numDoc: number;
+  numDoc: string;
   rznSocial: string;
   address: {
     direccion: string;

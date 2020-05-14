@@ -11,12 +11,14 @@ import { CurrencySelectorModalComponent } from './components/currency-selector-m
 import { ClientSelectorModalComponent } from './components/client-selector-modal.component/client-selector-modal.component';
 import { ProductSelectorModalComponent } from './components/product-selector-modal.component/product-selector-modal.component';
 import { DocumentTypeSelectorModalComponent } from './components/document-type-selector-modal.component/document-type-selector-modal.component';
+import { CustomListComponent } from './components/custom-list/custom-list.component';
 
 const components = [
   CurrencySelectorModalComponent,
   ClientSelectorModalComponent,
   ProductSelectorModalComponent,
   DocumentTypeSelectorModalComponent,
+  CustomListComponent,
 ];
 
 @NgModule({

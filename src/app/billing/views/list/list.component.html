@@ -6,6 +6,11 @@
       class="back"
       (tap)="onBackTapped()"
     ></Label>
-    <Label text="Facturación" textWrap="true" class="title"></Label>
+    <Label text="Ventas" textWrap="true" class="title"></Label>
+    <ScrollView height="100%">
+      <StackLayout class="page-content">
+        <app-custom-list [list]="billingList"> </app-custom-list>
+      </StackLayout>
+    </ScrollView>
   </StackLayout>
 </GridLayout>

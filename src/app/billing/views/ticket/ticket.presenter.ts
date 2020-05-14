@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { CompanyUtil } from '~/app/core/utils/company.util';
 import { NumberUtil } from '~/app/core/utils/number.util';
 import { IProductExtended } from '~/app/product/models/product-extended.model';
+import { IBilling } from '../../models/billing-extended.model';
 
 const UBL_VERSION = '2.1';
 const IGV_PERCENTAGE = 18;
@@ -37,6 +38,7 @@ export class TicketPresenter {
       .sendInvoice(data)
       .subscribe((response: IBillingResponse) => {
         if (response.sunatResponse.success) {
+          this.storeBilling(data, response);
           this._view.onSuccessSaved(response);
         } else {
           this._view.onErrorSaved(response);
@@ -106,5 +108,15 @@ export class TicketPresenter {
         mtoPrecioUnitario: item.mtoValorUnitario + totalIgv / item.cantidad,
       } as IBillingDetailRequest;
     });
+  }
+
+  private storeBilling(request: IBillingRequest, response: IBillingResponse) {
+    const billing = {
+      ...request,
+      sunatResponse: response.sunatResponse,
+    } as IBilling;
+    this._billingService
+      .storeBilling(this._view.company.ruc, billing)
+      .subscribe();
   }
 }

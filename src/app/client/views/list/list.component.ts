@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
   }
 
   onBackTapped() {
-    this._router.navigate(['home']);
+    this._router.back();
   }
 
   onAddButtonTapped() {

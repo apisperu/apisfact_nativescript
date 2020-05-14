@@ -34,6 +34,6 @@ export class MenuComponent implements OnInit {
     this.company = data;
   }
   onBackTapped() {
-    this.router.navigate(['company']);
+    this.router.back();
   }
 }

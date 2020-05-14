@@ -23,6 +23,10 @@ export class OnboardingPresenter {
     return this.appStateService.get('username');
   }
 
+  getLoginDate(): string {
+    return this.appStateService.get('loginDate');
+  }
+
   logout() {
     this.loginService.logout();
     this.router.navigate(['login']);

@@ -98,7 +98,7 @@ export class TicketComponent implements OnInit {
   }
 
   onBackTapped() {
-    this._router.navigate([`billing/${this.company.ruc}`]);
+    this._router.navigate([`company/menu/${this.company.ruc}`]);
   }
 
   setActiveCompany(company: ICompany) {

@@ -63,7 +63,7 @@ export class EditComponent implements OnInit {
   }
 
   onBackTapped() {
-    this.router.navigate(['product']);
+    this.router.back();
   }
 
   onSaveButtonTapped() {
@@ -88,7 +88,7 @@ export class EditComponent implements OnInit {
         },
       })
       .then((data: any) => {
-        this.router.navigate(['product']);
+        this.router.back();
       });
   }
 
@@ -105,7 +105,7 @@ export class EditComponent implements OnInit {
         },
       })
       .then((data: any) => {
-        this.router.navigate(['product']);
+        this.router.back();
       });
   }
 }

@@ -8,4 +8,10 @@ export class Endpoint {
   static invoice() {
     return `invoice/send`;
   }
+  static invoicePdf() {
+    return `invoice/pdf`;
+  }
+  static invoiceXml() {
+    return `invoice/xml`;
+  }
 }
